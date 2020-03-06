@@ -206,7 +206,6 @@ from
 		private.roles r
 		on ca.rol_id = r.rol_id;
 /*-----end view------*/
-	select * from private.apps;
 
 /*-----2 Vista que detalla cuenta, rol y empleado------*/
 CREATE OR REPLACE VIEW config_xuseremprol AS 
