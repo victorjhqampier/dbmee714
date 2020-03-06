@@ -1,5 +1,6 @@
 /*---------------PRIVATE----------------------------------------*/
 CREATE SCHEMA private;
+##todos son unos cojudos carjo
 
 create table private.departamentos( /*P01*/
 	departamento_id INT not null,
