@@ -1,5 +1,6 @@
 /*---------------PRIVATE----------------------------------------*/
 CREATE SCHEMA private;
+/*asta aqui todo bien*/
 create table private.departamentos( /*P01*/
 	departamento_id INT not null,
 	departamento VARCHAR(60) not null,
@@ -344,4 +345,3 @@ create procedure private_p_decifrador(in palabra varchar(45), in llave varchar(3
 		#select HEX(AES_ENCRYPT(palabra, llave)) as nombre;
         select AES_DECRYPT(UNHEX(palabra),llave) as decifrado;
 end $$
-
