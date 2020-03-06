@@ -213,7 +213,7 @@ update private.roles set id_rol=null where rol_id =1;
 select * from private.roles;
 
 insert into private.apps (app_id, app, controller, autor, awebsite, version, descricpcion) values 
-(1001,'Inicio', 'inicio', 'Arix Mee Company','www.arixmee.com','V1.0','Aplicacion dedicado a la mensajer√≠a'),
+(1001,'Inicio', 'inicio', 'Arix Mee Company','www.arixmee.com','V1.0','Aplicacion dedicado a la mensajer??a'),
 (1002,'Configuraciones', 'configuraciones', 'Arix Mee Company','www.arixmee.com','V1.1','App para configurar el comportamiento del sistema'),
 (1003,'Arix Store', 'arixstore', 'Arix Mee Company','www.arixmee.com','V1.0','Aplicacion dedicado a la administracion de aplicaciones');
 update private.apps set id_app= null where app_id = 1001;
@@ -221,14 +221,14 @@ select * from private.apps;
 
 /*Instalacion pendiente --------start--------- */
 insert into private_apps (app_id, app, controller, autor, awebsite, version, descricpcion) values 
-(2001,'PMB User', 'pmbuser', 'Arix Community','www.arixmee.com','V2.0','App para la administraci√≥n de usuarios para SIGB-PMB');
+(2001,'PMB User', 'pmbuser', 'Arix Community','www.arixmee.com','V2.0','App para la administraci??n de usuarios para SIGB-PMB');
 select * from private.apps;
 insert into private_submenus(app_id,submenu) values 
-(20011,2001,'Registro de Usuarios'),(20012,2001,'Carn√©s'),(20013,2001,'Reportes');
+(20011,2001,'Registro de Usuarios'),(20012,2001,'Carn??s'),(20013,2001,'Reportes');
 insert into nprivate_subapps (submenu_id, subapp, controller, rol) values
-(20011,'√öltimos registros','ultimos',7),(20011,'Actualizaci√≥n','actualizacion',6),
+(20011,'??ltimos registros','ultimos',7),(20011,'Actualizaci??n','actualizacion',6),
 (20012,'Impresos','impresos',7),(20012,'Pendientes','pendientes',7),(20012,'Duplicar','duplicar',6),(20012,'Caducos','caducos',6),
-(20013,'Estad√≠sticas','estadisticas',7),(20013,'Ingresos','ingresos',6);
+(20013,'Estad??sticas','estadisticas',7),(20013,'Ingresos','ingresos',6);
 select * from private_subapps;
 /*Instalacion pendiente --------end--------- */
 
@@ -239,12 +239,12 @@ insert into private.submenus(submenu_id, app_id,submenu) values
 select * from private.submenus;
 
 insert into private.subapps (submenu_id, subapp, controller, rol) values
-(10011,'Notificaciones','notificaciones',7)/*inicio*/,(10011,'MensajerÌa','mensajeria',7)/*buzon*/,(10011,'Contactos','contactos',7)/*Salida*/,
+(10011,'Notificaciones','notificaciones',7)/*inicio*/,(10011,'Mensajer?a','mensajeria',7)/*buzon*/,(10011,'Contactos','contactos',7)/*Salida*/,
 	(10012,'Mis eventos','eventos',7),(10012,'Agenda','agenda',7), (10012,'Calendario','calendario',7),
 	(10013,'Ajustes generales','generales',7),(10013,'Perfil de usuario','perfilusuario',7)/*recomedanciomes*/, (10013,'Cuenta de usuario','cuentausuario',7),
-(10021,'Sucursales','sucursales',6),(10021,'¡reas','areas',6),(10021,'Empleados','empleados',6),
+(10021,'Sucursales','sucursales',6),(10021,'?reas','areas',6),(10021,'Empleados','empleados',6),
 	(10022,'Usuarios del sistema','usuarios',4),(10022,'Grupos','grupos',4),    
-	(10023,'Contabilidad','contabiblidad',7),(10023,'Reportes','reportes',7),(10023,'Impresoras','impresoras',6),(10023,'C·maras','camaras',6),
+	(10023,'Contabilidad','contabiblidad',7),(10023,'Reportes','reportes',7),(10023,'Impresoras','impresoras',6),(10023,'C?maras','camaras',6),
 	(10024,'Crear App','newapp',6),(10024,'Subir App','uploadapp',6),
 (10031,'Apps instaladas','instaladas',7),(10031,'Apps recomendadas','recomendadas',6), (10031,'Todo las Apps','todos',6);
 select * from private.subapps;
@@ -256,7 +256,7 @@ select * from config.empcategorias;
 
 insert into config.empsubcategorias (subcategoria_id,categoria_id, subcategoria) values
 ('5e0044bde3e45','5e00416e2a8ac','PARA TODOS LAS SUBCATEGORIAS'),('5e004521def7d','5e00416e2a8ac','TRANSPORTE REGIONAL'),('5e00453c3395c','5e00416e2a8ac','TRANSPORTE PROVINCIAL'),
-('5e004559dd082','5e0041a439b77','PARA TODOS LAS SUBCATEGORIAS'),('5e004575e63e9','5e0041a439b77','POLLERIAS,QUINTAS,CHIFAS'),('5e00458d0f767','5e0041a439b77','CAFETERÕAS'),('5e0045a91658f','5e0041a439b77','HELADERÕAS'),
+('5e004559dd082','5e0041a439b77','PARA TODOS LAS SUBCATEGORIAS'),('5e004575e63e9','5e0041a439b77','POLLERIAS,QUINTAS,CHIFAS'),('5e00458d0f767','5e0041a439b77','CAFETER?AS'),('5e0045a91658f','5e0041a439b77','HELADER?AS'),
 ('5e0045c709f8f','5e004228a09df','PARA TODOS LAS SUBCATEGORIAS'),('5e0045f3115bc','5e004228a09df','PRESTAMINSTAS'),
 ('5e0046140bfc5','5e00425c57126','PARA TODOS LAS SUBCATEGORIAS'),('5e0046928c2c0','5e00425c57126','REGIONALES'),('5e0046928c2cb','5e00425c57126','PROVINCIALES'),('5e0046c7be21f','5e00425c57126','DISTRITALES'),
 ('5e06a94011b2e','5e06a10d99f2f','TODAS LAS CATEGORIAS'), ('5e06a9540f609','5e06a10d99f2f','VENTAS AL POR MENOR'),('5e06a96422c71','5e06a10d99f2f','VENTAS AL POR MAYOR');
@@ -270,11 +270,11 @@ select * from config.sucusales;
 delete from config.sucusales where sucursal_id = 1
 
 insert into config.areas(sucursal_id, areaminimal, area, funciones) values 
-(1, 'B1-D01', 'DEPARTAMENTO DE ADMINISTRACI”N', 'ADMINISTRAR LA BIBLIOTECA'),
-(1, 'B1-D02', 'DEPARTAMENTO DE CIRCULACI”N', 'ADMINISTRAR LOS DOCUMENTOS DE LA BIBLIOTECA'),
-(1, 'B1-D03', 'DEPARTAMENTO DE CATALOGACI”N', 'ADMINISTRAR RECUSOS INFORM¡TICOS DE LA BIBLIOTECA'),
-(2, 'C1-D01', 'DEPARTAMENTO DE ADMINISTRACI”N', 'ADMINISTRAR LA CASA DE CULTURA'),
-(2, 'C1-D02', 'DEPARTAMENTO DE ATENCI”N AL CLIENTE', 'ADMINISTRAR LOS DOCUMENTOS DE LA BIBLIOTECA');
+(1, 'B1-D01', 'DEPARTAMENTO DE ADMINISTRACI?N', 'ADMINISTRAR LA BIBLIOTECA'),
+(1, 'B1-D02', 'DEPARTAMENTO DE CIRCULACI?N', 'ADMINISTRAR LOS DOCUMENTOS DE LA BIBLIOTECA'),
+(1, 'B1-D03', 'DEPARTAMENTO DE CATALOGACI?N', 'ADMINISTRAR RECUSOS INFORM?TICOS DE LA BIBLIOTECA'),
+(2, 'C1-D01', 'DEPARTAMENTO DE ADMINISTRACI?N', 'ADMINISTRAR LA CASA DE CULTURA'),
+(2, 'C1-D02', 'DEPARTAMENTO DE ATENCI?N AL CLIENTE', 'ADMINISTRAR LOS DOCUMENTOS DE LA BIBLIOTECA');
 select * from config.areas;
 
 insert into config.profesiones(profesion) values
