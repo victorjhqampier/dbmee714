@@ -452,10 +452,12 @@ insert into config.recursos(recurso, direction,tipo) values
 ('boostrap.dataTables','https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js',1),
 ('jquery.dataTables','https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',1),
 ('Chart','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js',1),
-('arixmeejs','echo base_url("public/resources/js/arixmeejs.js");',1),
-('chart-area-demo','echo base_url("public/resources/js/chart-area-demo.js");',1),
-('datatables-demo','echo base_url("public/resources/js/datatables-demo.js");',1);
-('arix.configuraciones','echo base_url("public/resources/js/arix-configuraciones.js");',1);
+('arixmeejs','base_url();public/resources/js/arixmeejs.js',1),
+('chart-area-demo','base_url();public/resources/js/chart-area-demo.js',1),
+('datatables-demo','base_url();public/resources/js/datatables-demo.js',1),
+('inicio-arixjs','base_url();public/resources/js/arixjs-inicio.js',1),
+('configuraciones-arixjs','base_url();public/resources/js/arixjs-configuraciones.js',1),
+('arixstore-arixjs','base_url();public/resources/js/arixjs-arixstore.js',1);
 select * from config.recursos;
 /*---------ALGUNAS PRUEBAS------------------- */
 select * from private.traductores where sal = 'A93B84EDB93CD';
