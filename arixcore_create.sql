@@ -332,16 +332,10 @@ create table private.traductores(
     llave varchar (40) not null,
     primary key (traductor_id)
 );
-/*Procedimiento para cifrar palabras*/
-delimiter $$
-create procedure private_p_cifrador(in palabra varchar(45), in llave varchar(35))
-	begin
-		select HEX(AES_ENCRYPT(palabra, llave)) as cifrado;
-        #select concat(palabra,' ',llave,nombre);
-end $$
-delimiter $$
-create procedure private_p_decifrador(in palabra varchar(45), in llave varchar(35))
-	begin
-		#select HEX(AES_ENCRYPT(palabra, llave)) as nombre;
-        select AES_DECRYPT(UNHEX(palabra),llave) as decifrado;
-end $$
+create table config.recursos(
+	recurso_id serial,
+	recurso varchar(30) not null,
+	direction varchar(80) not null,
+	tipo int not null default 1, /*1 = js, 2 = css*/
+	primary key (recurso_id)
+);create unique index in_for_recursos on config.recursos(recurso_id);

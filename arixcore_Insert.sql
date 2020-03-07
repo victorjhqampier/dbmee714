@@ -447,6 +447,16 @@ fd5850eedbc5o'), ('E7B893AFE190E', 'E785128c26901a2f4cfd390a377354o'), ('E4E6995
 ('4A41DB220D4BD', 'E7d9a282500a9e030cbaa2803d8f29e5o'), ('793C7C29A11A9', 'E71bd1573b94bac321929a7dc2o'), ('0D46E62130CAE', 'E890f539d8b94600c0d8abe9o'), 
 ('3D4570468C5F0', 'E7d9a4d0cabe539a6157d6f8d50d1866o'), ('FB1499E633541', 'E5760bc9eadaec853efdfab01c03o'), 
 ('3C312BBACFE9E', 'E7d9a5df01b6af0066985f35b7051674o'), ('5BCAC0D486260', 'Ed7d9a680a72c8be03991a83023511b63o'), ('F7272D22592F9', 'Ea75860641c48b5198c33183706b3o'), ('2167E01505A1C', 'Ed9a7fb04851d2b8d9aade28e33f25eo'), ('01A7A9A9A83E1', 'Ed9a89dd6c9a15cd517015352c84d1fo'), ('4E208C2AA26E8', 'E93fa4c7e37ecba5febaa93a5689o'), ('7F4ED6B6C7586', 'Ef856523d3a2529c5262ae0c5eo'), ('7CD6A9044DA32', 'E85579bf55dbb86dab58fa325a3o'), ('78C13121565B3', '259b163cb8c6aa9da419f1fe00o');
+
+insert into config.recursos(recurso, direction,tipo) values
+('boostrap.dataTables','https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js',1),
+('jquery.dataTables','https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',1),
+('Chart','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js',1),
+('arixmeejs','echo base_url("public/resources/js/arixmeejs.js");',1),
+('chart-area-demo','echo base_url("public/resources/js/chart-area-demo.js");',1),
+('datatables-demo','echo base_url("public/resources/js/datatables-demo.js");',1);
+('arix.configuraciones','echo base_url("public/resources/js/arix-configuraciones.js");',1);
+select * from config.recursos;
 /*---------ALGUNAS PRUEBAS------------------- */
 select * from private.traductores where sal = 'A93B84EDB93CD';
 select * from config_cuentas
