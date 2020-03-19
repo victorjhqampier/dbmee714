@@ -45,6 +45,7 @@ create table private.permisos(/*---para los permisos de los botones leer, crear,
 	permiso varchar (60) not null,
 	primary key (permiso_id)
 );
+
 create table private.roles(
 	rol_id int not null,
     id_rol int default 1,/*Rol padre*/
@@ -252,6 +253,11 @@ create or replace view config.v_persona_empleado as
 		from private.personas p
 			inner join config.empleados e on p.persona_id = e.persona_id
 				left join config.cuentas c on e.empleado_id = c.empleado_id
+				
+create or replace view config.v_cuenta_permiso as 
+	select c.cuenta_id, c.empleado_id, c.permiso_id, p.binario
+		from config.cuentas c
+			inner join private.permisos p on c.permiso_id = p.permiso_id
      
 /*-----4 Vista que detalla empleado y persona------*/
 CREATE OR replace VIEW config_xempleadoper
@@ -332,10 +338,19 @@ create table private.traductores(
     llave varchar (40) not null,
     primary key (traductor_id)
 );
-create table config.recursos(
+create table config.recursos(/*css y js*/
 	recurso_id serial,
 	recurso varchar(30) not null,
 	direction varchar(80) not null,
 	tipo int not null default 1, /*1 = js, 2 = css*/
 	primary key (recurso_id)
 );create unique index in_for_recursos on config.recursos(recurso_id);
+
+create table config.botones(/*los bonotes del sistema*/
+	boton_id serial,
+	permiso_id int not null,
+	boton varchar(50) not null,
+	icono varchar(70) not null,
+	foreign key (permiso_id) references private.permisos (permiso_id),
+	primary key(boton_id)	
+);

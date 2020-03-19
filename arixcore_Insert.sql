@@ -194,14 +194,14 @@ insert into private.personas(distrito_id, documento, nombres, paterno, materno, 
 select * from private.personas;
 
 insert into private.permisos values
-(8, 1000, '1-0-0-0 | LEER, -, -, -'),
-(9, 1001, '1-0-0-1 | LEER, -, -, BORRAR'),
-(10, 1010, '1-0-1-0 | LEER, -, ACTUALIZAR, -'),
-(11, 1011, '1-0-1-1 | LEER, -, ACTUALIZAR, BORRAR'),
-(12, 1100, '1-1-0-0 | LEER, ESCRIBIR, - , -'),
-(13, 1101, '1-1-0-1 | LEER, ESCRIBIR, - ,BORRAR'),
-(14, 1110, '1-1-1-0 | LEER, ESCRIBIR, ACTUALIZAR, -'),
-(15, 1111, '1-1-1-1 | LEER, ESCRIBIR, ACTUALIZAR, BORRAR');
+(8, 1000, 'LEER, -, -, -'),
+(9, 1001, 'LEER, -, -, BORRAR'),
+(10, 1010, 'LEER, -, ACTUALIZAR, -'),
+(11, 1011, 'LEER, -, ACTUALIZAR, BORRAR'),
+(12, 1100, 'LEER, ESCRIBIR, - , -'),
+(13, 1101, 'LEER, ESCRIBIR, - ,BORRAR'),
+(14, 1110, 'LEER, ESCRIBIR, ACTUALIZAR, -'),
+(15, 1111, 'LEER, ESCRIBIR, ACTUALIZAR, BORRAR');
 select * from private.permisos;
 
 insert into private.roles (rol_id, rol, descripcion) values
@@ -304,14 +304,9 @@ select * from config.v_persona_empleado_cuenta;
 select * from config.v_persona_empleado;
 select * from config.v_cuenta_sucursal;
 select * from config.v_menu_subapp where app_id = 1002 and (rol = 5 OR rol = 7);
+select * from config.v_cuenta_permiso;
 
-group by submenu_id, submenu
-group by submenu_id;
-AND rol>=4 (rol = 6 OR rol = 7)
-group by submenu_id;
-select * from config_xempleadoper;
-select * from config_xuserempleado;
-select * from private_distritos where distrito_id = 100;
+
 
 /*----------------BASES PARA EL CIFRADO-----------------*/
 insert into private.traductores (sal, llave) values
@@ -459,6 +454,25 @@ insert into config.recursos(recurso, direction,tipo) values
 ('configuraciones-arixjs','base_url();public/resources/js/arixjs-configuraciones.js',1),
 ('arixstore-arixjs','base_url();public/resources/js/arixjs-arixstore.js',1);
 select * from config.recursos;
+
+insert into config.botones(permiso_id,boton, icono) values
+(8,'btn-editar','fas fa-pen'),
+(8,'btn-ayuda', 'fas fa-info-circle'),
+(8,'btn-atras', 'fas fa-backward'),
+(8,'btn-listar', 'fas fa-th-list'),
+(8,'btn-imprimir', 'fas fa-print'),
+(8,'btn-descargar', 'fas fa-download'),
+(8,'btn-detalles', 'fas fa-window-restore'),
+(8,'btn-cerrar', 'fas fa-times'),
+(8,'btn-agregar', 'fas fa-plus'),
+(9,'btn-borrar', 'fas fa-trash'),
+(10,'btn-terminar', 'fas fa-power-off'),
+(10,'btn-actualizar', 'fas fa-retweet'),
+(12,'btn-guardar', 'fas fa-check');
+select * from config.botones;
+
+select * from private.permisos
+
 /*---------ALGUNAS PRUEBAS------------------- */
 select * from private.traductores where sal = 'A93B84EDB93CD';
 select * from config_cuentas
