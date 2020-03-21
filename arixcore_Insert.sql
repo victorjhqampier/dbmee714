@@ -455,7 +455,11 @@ insert into config.recursos(recurso, direction,tipo) values
 ('arixstore-arixjs','base_url();public/resources/js/arixjs-arixstore.js',1);
 select * from config.recursos;
 
-insert into config.botones(permiso_id,boton, icono) values
+insert into config.botones(permiso,boton, icono) values
+(1,'btn-borrar', 'fas fa-trash'),
+(2,'btn-terminar', 'fas fa-power-off'),
+(2,'btn-actualizar', 'fas fa-retweet'),
+(4,'btn-guardar', 'fas fa-check'),
 (8,'btn-editar','fas fa-pen'),
 (8,'btn-ayuda', 'fas fa-info-circle'),
 (8,'btn-atras', 'fas fa-backward'),
@@ -464,16 +468,13 @@ insert into config.botones(permiso_id,boton, icono) values
 (8,'btn-descargar', 'fas fa-download'),
 (8,'btn-detalles', 'fas fa-window-restore'),
 (8,'btn-cerrar', 'fas fa-times'),
-(8,'btn-agregar', 'fas fa-plus'),
-(9,'btn-borrar', 'fas fa-trash'),
-(10,'btn-terminar', 'fas fa-power-off'),
-(10,'btn-actualizar', 'fas fa-retweet'),
-(12,'btn-guardar', 'fas fa-check');
+(8,'btn-agregar', 'fas fa-plus');
 select * from config.botones;
 
 select * from private.permisos
 
 /*---------ALGUNAS PRUEBAS------------------- */
+SELECT "documento", "codigo", "nombres", "paterno", "materno", "fotografia", "estado", "fregistro" FROM "config"."v_persona_empleado_cuenta" WHERE 'jefe_id' IS NOT NULL ORDER BY "fmodificacion" DESC LIMIT 0
 select * from private.traductores where sal = 'A93B84EDB93CD';
 select * from config_cuentas
 select HEX(AES_ENCRYPT(5, '47d9647fb213dee9893b5889894d4a23')) code;
