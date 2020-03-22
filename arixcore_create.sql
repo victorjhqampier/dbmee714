@@ -248,8 +248,6 @@ create or replace view config.v_persona_empleado_cuenta as
 			inner join config.empleados e on p.persona_id = e.persona_id
 				inner join config.cuentas c on e.empleado_id = c.empleado_id;
 			
-			
-	
 create or replace view config.v_persona_empleado as 
 	select p.documento, e.codigo, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
 		e.profesion_id, e.fmodificacion, e.fregistro, e.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.estado ecuenta
