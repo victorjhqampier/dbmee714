@@ -264,8 +264,8 @@ select * from config.empsubcategorias where subcategoria_id = '5e0044bde3e45';
 /**ESTO DEBE CAMBIAR SEGUN LA EMPRESA*/
 
 insert into config.sucusales (sucpadre_id, distrito_id, subcategoria_id, adminstrador_id, ruc, rsocial, nombre, direccion) values
-(null, 1594, '5e0044bde3e45', 1, '2014624708', 'MUNICIPALIDAD PROPINCIAL DE PUNO', 'BIBLIOTECA MUNICIPAL GAMALIEL CHURATA', 'Jr. Lima 550 Segundo Piso'),
-(1, 1594, '5e0044bde3e45', 1, '2014624708', 'MUNICIPALIDAD PROPINCIAL DE PUNO', 'CASA DE LA CULTURA PUNO', 'Jr. Lima 550 Primer Piso');
+(null, 1594, '5e0044bde3e45', 1, '2014624708', 'SHOPDAY E.R.L', 'SHOPDAY SEDE CENTRAL', 'Jr. Andino 1235 frente a la Comisaria'),
+(1, 1594, '5e0044bde3e45', 1, '2014624708', 'SHOPDAY E.R.L', 'SHOPDAY SEDE GALERIAS NICSON 1', 'Jr. Arica 465 Segundo Piso');
 select * from config.sucusales;
 delete from config.sucusales where sucursal_id = 1
 
