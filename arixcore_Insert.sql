@@ -455,22 +455,21 @@ insert into config.recursos(recurso, direction,tipo) values
 ('arixstore-arixjs','base_url();public/resources/js/arixjs-arixstore.js',1);
 select * from config.recursos;
 
-insert into config.botones(permiso,boton, icono) values
-(1,'btn-borrar', 'fas fa-trash'),
-(2,'btn-terminar', 'fas fa-power-off'),
-(2,'btn-actualizar', 'fas fa-retweet'),
-(4,'btn-guardar', 'fas fa-check'),
-(8,'btn-editar','fas fa-pen'),
-(8,'btn-ayuda', 'fas fa-info-circle'),
-(8,'btn-atras', 'fas fa-backward'),
-(8,'btn-listar', 'fas fa-th-list'),
-(8,'btn-imprimir', 'fas fa-print'),
-(8,'btn-descargar', 'fas fa-download'),
-(8,'btn-detalles', 'fas fa-window-restore'),
-(8,'btn-cerrar', 'fas fa-times'),
-(8,'btn-agregar', 'fas fa-plus');
+insert into config.botones(permiso,boton, icono, titulo) values
+(1,'btn-borrar', 'fas fa-trash','Eliminar'),
+(2,'btn-terminar', 'fas fa-power-off','Terminar'),
+(2,'btn-actualizar', 'fas fa-retweet','Actualizar'),
+(4,'btn-guardar', 'fas fa-check','Guardar'),
+(8,'btn-editar','fas fa-pen','Editar'),
+(8,'btn-ayuda', 'fas fa-info-circle','Ayuda'),
+(8,'btn-atras', 'fas fa-backward','Atrás'),
+(8,'btn-listar', 'fas fa-th-list','Ver lista'),
+(8,'btn-imprimir', 'fas fa-print','Imprimir'),
+(8,'btn-descargar', 'fas fa-download','Descargar'),
+(8,'btn-detalles', 'fas fa-window-restore','Ver detalles'),
+(8,'btn-cerrar', 'fas fa-times','Cancelar'),
+(8,'btn-agregar', 'fas fa-plus','Nuevo');
 select * from config.botones;
-
 select * from private.permisos
 
 /*---------ALGUNAS PRUEBAS------------------- */

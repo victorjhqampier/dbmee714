@@ -352,5 +352,6 @@ create table config.botones(/*los bonotes del sistema*/
 	permiso int not null,
 	boton varchar(50) not null,
 	icono varchar(70) not null,
+	titulo varchar (60) not null,
 	primary key(boton_id)	
 );
