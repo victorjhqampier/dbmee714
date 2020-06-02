@@ -105,6 +105,7 @@ create table config.sucusales (
 	sucpadre_id INT default 1,
 	distrito_id INT not null,
     subcategoria_id char(13) not null,
+    imagen varchar(80) not null,
     adminstrador_id INT not null,
 	ruc VARCHAR(11) not null,
 	rsocial VARCHAR(90) not null,
