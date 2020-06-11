@@ -188,7 +188,7 @@ INSERT INTO private.distritos (distrito_id, distrito, provincia_id) VALUES
 select * from private.distritos where distrito = 'ILAVE';
 
 insert into private.personas(distrito_id, documento, nombres, paterno, materno, nacimiento, sexo, telefono, fotografia, direccion, correo) values
-(1641, '48207109', 'VICTOR JHAMPIER', 'CAXI', 'MAQUERA', '1994/03/28', 1, '968991714', 'public/images/users/tu39hnri84fheg.png', 'Jr. Amazonas 1234', 'victorjhampier@gmail.com'),
+(1641, '48207109', 'VICTOR JHAMPIER', 'CAXI', 'MAQUERA', '1994/03/28', 1, '968991714', 'public/images/users/tu39hnri84fhe2.png', 'Jr. Amazonas 1234', 'victorjhampier@gmail.com'),
 (1728, '70240254', 'GUIDO PEDRO', 'JARA', 'ACCHA', '1989/06/27', 1, '931864569', 'public/images/users/tu39hWR45Rgfh78gfr.png', 'BARRIO SAN FRANCISCO JAVIER', 'jaraperdo_345@hotmail.com'),
 (1641, '47698577', 'MARIA CLARET', 'JULI', 'TARAPA', '1992/06/27', 2, '931423569', 'public/images/users/tu39hWR45Rgfh787GYgfr.png', 'BARRIO SAN FRANCISCO JAVIER', 'claret_35_maria5@hotmail.com');
 select * from private.personas;
@@ -461,7 +461,7 @@ insert into config.botones(permiso,boton, icono, titulo) values
 (4,'btn-guardar', 'fas fa-check','Guardar'),
 (8,'btn-editar','fas fa-pen','Editar'),
 (8,'btn-ayuda', 'fas fa-info-circle','Ayuda'),
-(8,'btn-atras', 'fas fa-backward','Atr��s'),
+(8,'btn-atras', 'fas fa-backward','Atr������s'),
 (8,'btn-listar', 'fas fa-th-list','Ver lista'),
 (8,'btn-imprimir', 'fas fa-print','Imprimir'),
 (8,'btn-descargar', 'fas fa-download','Descargar'),
