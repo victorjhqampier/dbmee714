@@ -305,8 +305,6 @@ select * from config.v_cuenta_sucursal;
 select * from config.v_menu_subapp where app_id = 1002 and (rol = 5 OR rol = 7);
 select * from config.v_cuenta_permiso;
 
-
-
 /*----------------BASES PARA EL CIFRADO-----------------*/
 insert into private.traductores (sal, llave) values
 ('08E22C5596EF7', 'Ea68ee0209cec07919eb46e35o'), ('E927B434B2524', 'E7d740084562ea774ce1e75d6ffa7dd8o'), ('3432E80D8F76F', 'Eb1cd415812907a8a2a3d360o'), 
@@ -461,7 +459,7 @@ insert into config.botones(permiso,boton, icono, titulo) values
 (4,'btn-guardar', 'fas fa-check','Guardar'),
 (8,'btn-editar','fas fa-pen','Editar'),
 (8,'btn-ayuda', 'fas fa-info-circle','Ayuda'),
-(8,'btn-atras', 'fas fa-backward','Atr������s'),
+(8,'btn-atras', 'fas fa-backward','Atr������������������s'),
 (8,'btn-listar', 'fas fa-th-list','Ver lista'),
 (8,'btn-imprimir', 'fas fa-print','Imprimir'),
 (8,'btn-descargar', 'fas fa-download','Descargar'),

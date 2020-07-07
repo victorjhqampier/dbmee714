@@ -133,7 +133,6 @@ create table config.profesiones(
     profesion varchar (80) not null,
     primary key (profesion_id)
 );
-
 create table config.empleados(
 	empleado_id SERIAL,
     persona_id int not null,
@@ -150,7 +149,6 @@ create table config.empleados(
 	foreign key (profesion_id) references config.profesiones (profesion_id),
 	primary key (empleado_id)
 );
-
 create table config.cuentas (
 	cuenta_id serial,
 	empleado_id INT not null,
@@ -187,9 +185,7 @@ create table config.cuentasucursal(
 	primary key (cuenta_id, sucursal_id)
 );
 
-
 /*---------VISTAS PARA CONFIG------------------- */
-
 /*Consulta para enlistar las aplicaciones de un usuario*/
 CREATE VIEW config.v_cuenta_sucursal as
 select s.nombre, cs.cuenta_id, cs.sucursal_id from config.cuentasucursal cs
@@ -207,23 +203,6 @@ from
 	inner join 
 		private.roles r
 		on ca.rol_id = r.rol_id;
-/*-----end view------*/
-
-/*-----2 Vista que detalla cuenta, rol y empleado------*/
-CREATE OR REPLACE VIEW config_xuseremprol AS 
-select
-   ca.cuenta_id, a.app, a.controller, r.rol, cu.empleado_id
-from
-	config_cuentaapprol ca	
-	inner join 
-		private_roles r
-		on ca.rol_id = r.rol_id
-	inner join
-		private_apps a 
-		on ca.app_id = a.app_id
-	inner join 
-		config_cuentas cu
-		on ca.cuenta_id = cu.cuenta_id;
 /*-----end view------*/
 
 /*-----3 Vista que detalla submenus y subapp de cada app------*/
@@ -244,7 +223,7 @@ from
 
 create or replace view config.v_persona_empleado_cuenta as
 	select p.documento, e.codigo, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
-		e.profesion_id, e.fmodificacion, e.fregistro, e.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.cuenta_id
+		e.profesion_id, e.fmodificacion, e.fregistro, c.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.cuenta_id
 		from private.personas p
 			inner join config.empleados e on p.persona_id = e.persona_id
 				inner join config.cuentas c on e.empleado_id = c.empleado_id;
@@ -260,7 +239,72 @@ create or replace view config.v_cuenta_permiso as
 	select c.cuenta_id, c.empleado_id, c.permiso_id, p.binario
 		from config.cuentas c
 			inner join private.permisos p on c.permiso_id = p.permiso_id
-     
+             
+/*----------------BASES PARA EL CIFRADO*/
+create table private.traductores(
+	traductor_id serial,
+    sal char(13) not null unique,
+    llave varchar (40) not null,
+    primary key (traductor_id)
+);
+create table config.recursos(/*css y js*/
+	recurso_id serial,
+	recurso varchar(30) not null,
+	direction varchar(80) not null,
+	tipo int not null default 1, /*1 = js, 2 = css*/
+	primary key (recurso_id)
+);create unique index in_for_recursos on config.recursos(recurso_id);
+
+create table config.botones(/*los bonotes del sistema*/
+	boton_id serial,
+	permiso int not null,
+	boton varchar(50) not null,
+	icono varchar(70) not null,
+	titulo varchar (60) not null,
+	primary key(boton_id)	
+);
+
+/*PRUEBAS*/
+/*-----2 Vista que detalla cuenta, rol y empleado------*/
+CREATE OR REPLACE VIEW config_xuseremprol AS 
+select
+   ca.cuenta_id, a.app, a.controller, r.rol, cu.empleado_id
+from
+	config_cuentaapprol ca	
+	inner join 
+		private_roles r
+		on ca.rol_id = r.rol_id
+	inner join
+		private_apps a 
+		on ca.app_id = a.app_id
+	inner join 
+		config_cuentas cu
+		on ca.cuenta_id = cu.cuenta_id;
+/*-----end view------*/
+	/*7 vista que trae cucursal y areas del sucursal----------------------------------------------------*****/
+CREATE OR REPLACE VIEW config_xsucuarea AS
+select
+   su.sucursal_id,
+   su.nombre,
+   ar.area_id,
+   ar.areaminimal,
+   ar.area
+from
+   config_sucusales su 
+   inner join
+      config_areas ar 
+      on su.sucursal_id = ar.sucursal_id;
+ /*-----6 Vista que recupera distri_id_pro_id y dep_id apartir de distrito_id------*/
+CREATE VIEW config_xdisprovdep AS
+select
+   nd.distrito_id,
+   np.provincia_id,
+   np.departamento_id 
+from
+   private_distritos nd 
+   inner join
+      private_provincias np 
+      on nd.provincia_id = np.provincia_id;
 /*-----4 Vista que detalla empleado y persona------*/
 CREATE OR replace VIEW config_xempleadoper
 AS
@@ -306,53 +350,3 @@ FROM	config_empleados em
          INNER JOIN private_personas pe
                  ON em.persona_id = pe.persona_id
 WHERE em.jefe_id IS NOT NULL;
-
-/*-----6 Vista que recupera distri_id_pro_id y dep_id apartir de distrito_id------*/
-CREATE VIEW config_xdisprovdep AS
-select
-   nd.distrito_id,
-   np.provincia_id,
-   np.departamento_id 
-from
-   private_distritos nd 
-   inner join
-      private_provincias np 
-      on nd.provincia_id = np.provincia_id;
-      
-/*7 vista que trae cucursal y areas del sucursal----------------------------------------------------*****/
-CREATE OR REPLACE VIEW config_xsucuarea AS
-select
-   su.sucursal_id,
-   su.nombre,
-   ar.area_id,
-   ar.areaminimal,
-   ar.area
-from
-   config_sucusales su 
-   inner join
-      config_areas ar 
-      on su.sucursal_id = ar.sucursal_id;
-      
-/*----------------BASES PARA EL CIFRADO*/
-create table private.traductores(
-	traductor_id serial,
-    sal char(13) not null unique,
-    llave varchar (40) not null,
-    primary key (traductor_id)
-);
-create table config.recursos(/*css y js*/
-	recurso_id serial,
-	recurso varchar(30) not null,
-	direction varchar(80) not null,
-	tipo int not null default 1, /*1 = js, 2 = css*/
-	primary key (recurso_id)
-);create unique index in_for_recursos on config.recursos(recurso_id);
-
-create table config.botones(/*los bonotes del sistema*/
-	boton_id serial,
-	permiso int not null,
-	boton varchar(50) not null,
-	icono varchar(70) not null,
-	titulo varchar (60) not null,
-	primary key(boton_id)	
-);
