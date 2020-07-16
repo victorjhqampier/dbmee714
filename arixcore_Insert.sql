@@ -440,17 +440,18 @@ fd5850eedbc5o'), ('E7B893AFE190E', 'E785128c26901a2f4cfd390a377354o'), ('E4E6995
 ('3D4570468C5F0', 'E7d9a4d0cabe539a6157d6f8d50d1866o'), ('FB1499E633541', 'E5760bc9eadaec853efdfab01c03o'), 
 ('3C312BBACFE9E', 'E7d9a5df01b6af0066985f35b7051674o'), ('5BCAC0D486260', 'Ed7d9a680a72c8be03991a83023511b63o'), ('F7272D22592F9', 'Ea75860641c48b5198c33183706b3o'), ('2167E01505A1C', 'Ed9a7fb04851d2b8d9aade28e33f25eo'), ('01A7A9A9A83E1', 'Ed9a89dd6c9a15cd517015352c84d1fo'), ('4E208C2AA26E8', 'E93fa4c7e37ecba5febaa93a5689o'), ('7F4ED6B6C7586', 'Ef856523d3a2529c5262ae0c5eo'), ('7CD6A9044DA32', 'E85579bf55dbb86dab58fa325a3o'), ('78C13121565B3', '259b163cb8c6aa9da419f1fe00o');
 
-insert into config.recursos(recurso, direction,tipo) values
+insert into config.recursos(recurso, direction,tipo) values 
 ('boostrap.dataTables','https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js',1),
 ('jquery.dataTables','https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',1),
 ('Chart','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js',1),
 ('arixmeejs','base_url();public/resources/js/arixmeejs.js',1),
-('chart-area-demo','base_url();public/resources/js/chart-area-demo.js',1),
-('datatables-demo','base_url();public/resources/js/datatables-demo.js',1),
 ('inicio-arixjs','base_url();public/resources/js/arixjs-inicio.js',1),
 ('configuraciones-arixjs','base_url();public/resources/js/arixjs-configuraciones.js',1),
 ('arixstore-arixjs','base_url();public/resources/js/arixjs-arixstore.js',1);
 select * from config.recursos;
+/*delete from config.recursos where direction = 'datatables-demo';
+update config.recursos SET direction = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js' 
+where recurso_id = 3*/
 
 insert into config.botones(permiso,boton, icono, titulo) values
 (1,'btn-borrar', 'fas fa-trash','Eliminar'),
@@ -459,7 +460,7 @@ insert into config.botones(permiso,boton, icono, titulo) values
 (4,'btn-guardar', 'fas fa-check','Guardar'),
 (8,'btn-editar','fas fa-pen','Editar'),
 (8,'btn-ayuda', 'fas fa-info-circle','Ayuda'),
-(8,'btn-atras', 'fas fa-backward','Atr������������������s'),
+(8,'btn-atras', 'fas fa-backward','Atr������������������������������������������������������s'),
 (8,'btn-listar', 'fas fa-th-list','Ver lista'),
 (8,'btn-imprimir', 'fas fa-print','Imprimir'),
 (8,'btn-descargar', 'fas fa-download','Descargar'),
