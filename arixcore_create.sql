@@ -1,6 +1,14 @@
+/*
+ 1. tablas, esqueemas protegidas (config, private)
+ 	1.1. tablas o vistas acccedidas solo por la api
+ 		no respeta ningun estandiracion
+ 	tablas y otros protegidos pero accedidos por arixshell si cumple la estadarización
+ 	1.2. nombre de tabla = plural
+ 		id de tabla = [nombre de tabla][singular]+_id
+ */
+
 /*---------------PRIVATE----------------------------------------*/
 CREATE SCHEMA private;
-/*asta aqui todo bien*/
 create table private.departamentos( /*P01*/
 	departamento_id INT not null,
 	departamento VARCHAR(60) not null,
@@ -100,7 +108,8 @@ create table config.empsubcategorias( /*compsubcategorias_C09*/
 	foreign key (categoria_id) references config.empcategorias (categoria_id),
 	primary key (subcategoria_id)
 );
-create table config.sucusales (
+
+create table config.sucursales (
 	sucursal_id SERIAL,
 	sucpadre_id INT default 1,
 	distrito_id INT not null,
@@ -112,10 +121,10 @@ create table config.sucusales (
 	nombre VARCHAR(80) not null,
 	direccion VARCHAR(80) not null,
 	fregistro TIMESTAMP not null default current_timestamp,
-    foreign key (sucpadre_id) references config.sucusales(sucursal_id),
+    foreign key (sucpadre_id) references config.sucursales(sucursal_id),/*cambiar*/
     foreign key (distrito_id) references private.distritos (distrito_id),
     foreign key (adminstrador_id) references private.personas(persona_id),
-    foreign key (subcategoria_id) references config.EMPsubcategorias(subcategoria_id),
+    foreign key (subcategoria_id) references config.empsubcategorias(subcategoria_id),
     primary key (sucursal_id)
 );
 create table config.areas(
@@ -125,14 +134,16 @@ create table config.areas(
 	area VARCHAR(50) not null,
 	funciones VARCHAR(100) not null,
 	f_registro TIMESTAMP not null default current_timestamp,
-    foreign key (sucursal_id) references config.sucusales (sucursal_id),
+    foreign key (sucursal_id) references config.sucursales (sucursal_id),
     primary key (area_id)
 );
+
 create table config.profesiones(
 	profesion_id SERIAL,
     profesion varchar (80) not null,
     primary key (profesion_id)
 );
+
 create table config.empleados(
 	empleado_id SERIAL,
     persona_id int not null,
@@ -149,14 +160,15 @@ create table config.empleados(
 	foreign key (profesion_id) references config.profesiones (profesion_id),
 	primary key (empleado_id)
 );
+
 create table config.cuentas (
 	cuenta_id serial,
 	empleado_id INT not null,
     root_id int default 1,/*Id del usuario root que todos dependen*/
     permiso_id int not null, /*Lectura o escritura*/
-	correo VARCHAR(90) not null unique,
-	pass VARCHAR(62) not null,
-    passini VARCHAR(62) not null,
+	correo VARCHAR(100) not null unique,
+	pass VARCHAR(100) not null,
+    passini VARCHAR(100) not null,
 	estado BOOL default true, /*puede estar suspendido*/
 	fregistro timestamp not null default current_timestamp,
     fmodificacion timestamp not null default current_timestamp,
@@ -165,6 +177,7 @@ create table config.cuentas (
     foreign key (permiso_id) references private.permisos(permiso_id),
 	primary key (cuenta_id)
 );
+/*ALTER TABLE config.cuentas  ALTER COLUMN passini TYPE VARCHAR(100);*/
 
 create table config.cuentaapprol(
 	app_id INT not null,
@@ -181,7 +194,7 @@ create table config.cuentasucursal(
 	cuenta_id int not null,
 	sucursal_id int not null,
 	foreign key (cuenta_id) references config.cuentas (cuenta_id),
-	foreign key (sucursal_id) references config.sucusales (sucursal_id),
+	foreign key (sucursal_id) references config.sucursales (sucursal_id),
 	primary key (cuenta_id, sucursal_id)
 );
 
@@ -189,7 +202,7 @@ create table config.cuentasucursal(
 /*Consulta para enlistar las aplicaciones de un usuario*/
 CREATE VIEW config.v_cuenta_sucursal as
 select s.nombre, cs.cuenta_id, cs.sucursal_id from config.cuentasucursal cs
-	inner join config.sucusales s on cs.sucursal_id = s.sucursal_id
+	inner join config.sucursales s on cs.sucursal_id = s.sucursal_id
 
 /*-----Vista que detalla app, cuenta y rol------*/
 CREATE VIEW config.v_cuenta_app_rol AS 
@@ -227,14 +240,14 @@ create or replace view config.v_persona_empleado_cuenta as
 		from private.personas p
 			inner join config.empleados e on p.persona_id = e.persona_id
 				inner join config.cuentas c on e.empleado_id = c.empleado_id;
-			
+
 create or replace view config.v_persona_empleado as 
 	select p.documento, e.codigo, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
 		e.profesion_id, e.fmodificacion, e.fregistro, e.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.estado ecuenta
 		from private.personas p
 			inner join config.empleados e on p.persona_id = e.persona_id
 				left join config.cuentas c on e.empleado_id = c.empleado_id
-				
+
 create or replace view config.v_cuenta_permiso as 
 	select c.cuenta_id, c.empleado_id, c.permiso_id, p.binario
 		from config.cuentas c
@@ -290,7 +303,7 @@ select
    ar.areaminimal,
    ar.area
 from
-   config_sucusales su 
+   config_sucusales su /*cambiar*/
    inner join
       config_areas ar 
       on su.sucursal_id = ar.sucursal_id;

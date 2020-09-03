@@ -223,6 +223,7 @@ select * from private.apps;
 insert into private_apps (app_id, app, controller, autor, awebsite, version, descricpcion) values 
 (2001,'PMB User', 'pmbuser', 'Arix Community','www.arixmee.com','V2.0','App para la administraci??n de usuarios para SIGB-PMB');
 select * from private.apps;
+
 insert into private_submenus(app_id,submenu) values 
 (20011,2001,'Registro de Usuarios'),(20012,2001,'Carn??s'),(20013,2001,'Reportes');
 insert into nprivate_subapps (submenu_id, subapp, controller, rol) values
@@ -263,10 +264,9 @@ insert into config.empsubcategorias (subcategoria_id,categoria_id, subcategoria)
 select * from config.empsubcategorias where subcategoria_id = '5e0044bde3e45';
 /**ESTO DEBE CAMBIAR SEGUN LA EMPRESA*/
 
-insert into config.sucusales (sucpadre_id, distrito_id, subcategoria_id, adminstrador_id, ruc, imagen, rsocial, nombre, direccion) values
-(null, 1594, '5e0044bde3e45', 1, '2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'SHOPDAY SEDE CENTRAL', 'Jr. Andino 1235 frente a la Comisaria'),
-(1, 1594, '5e0044bde3e45', 1, '2014624708', '609f436c933f6813f16092f6ff87a1da.jpg', 'SHOPDAY E.R.L', 'SHOPDAY SEDE GALERIAS NICSON 1', 'Jr. Arica 465 Segundo Piso');
-select * from config.sucusales;
+insert into config.sucursales (sucpadre_id, distrito_id, subcategoria_id, adminstrador_id, ruc, imagen, rsocial, nombre, direccion) values
+(null, 1594, '5e0044bde3e45', 1, '2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'SHOPDAY SEDE CENTRAL', 'Jr. Andino 1235 frente a la Comisaria');
+select * from config.sucursales;
 
 insert into config.areas(sucursal_id, areaminimal, area, funciones) values 
 (1, 'B1-D01', 'DEPARTAMENTO DE ADMINISTRACI?N', 'ADMINISTRAR LA BIBLIOTECA'),
@@ -282,23 +282,25 @@ insert into config.profesiones(profesion) values
 select * from config.profesiones;
 
 insert into config.empleados(persona_id, area_id, jefe_id, profesion_id, codigo) values
-(1, 1, null, 8, '134118'), (1, 1, 1, 2, '018284');
+(1, 1, null, 8, '134118'), (3, 1, 1, 2, '018284');
 select * from config.empleados;
+/*update config.empleados set persona_id = 3 where empleado_id = 2*/
 
 insert into config.cuentas (empleado_id, root_id,permiso_id, correo, pass, passini) values
-(1, NULL,15, 'victorjhamnpier@gmail.com', '$2y$12$7XBLmNAuuiDHjP0v06/pW.CFNB2vSrRQHzXIIG9EFLSWGOfzkE/Ue', '$2y$12$7XBLmNAuuiDHjP0v06/pW.CFNB2vSrRQHzXIIG9EFLSWGOfzkE/Ue');
+(1, NULL,15, 'victorjhamnpier@gmail.com', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq');
 select * from config.cuentas;
 
 insert into config.cuentaapprol (app_id, cuenta_id, rol_id) values
-(1001,1,2), (1002,1,2), (1003,1,2);/*Root Por defecto a todas las apps*/
+(1001,2,2), (1002,1,2), (1003,1,2);/*Root Por defecto a todas las apps*/
 select * from config.cuentaapprol;
 
 insert into config.cuentasucursal (cuenta_id, sucursal_id) values
-(2,1),(2,2);
+(1,1),(1,2);
 select * from config.cuentasucursal;
 
+
 /*---------CONSULTAS PARA LAS VISTAS PARA CONFIG------------------- */
-select * from config.v_cuenta_app_rol WHERE cuenta_id = 4 and app_id = 1001 controller = 'arixstore' and id_app is null;
+select * from config.v_cuenta_app_rol WHERE cuenta_id = 1 and app_id = 1001 controller = 'arixstore' and id_app is null;
 select * from config.v_persona_empleado_cuenta;
 select * from config.v_persona_empleado;
 select * from config.v_cuenta_sucursal;
@@ -460,7 +462,7 @@ insert into config.botones(permiso,boton, icono, titulo) values
 (4,'btn-guardar', 'fas fa-check','Guardar'),
 (8,'btn-editar','fas fa-pen','Editar'),
 (8,'btn-ayuda', 'fas fa-info-circle','Ayuda'),
-(8,'btn-atras', 'fas fa-backward','Atr������������������������������������������������������s'),
+(8,'btn-atras', 'fas fa-backward','Atr��s'),
 (8,'btn-listar', 'fas fa-th-list','Ver lista'),
 (8,'btn-imprimir', 'fas fa-print','Imprimir'),
 (8,'btn-descargar', 'fas fa-download','Descargar'),
