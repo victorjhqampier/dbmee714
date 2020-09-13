@@ -252,7 +252,12 @@ create or replace view config.v_cuenta_permiso as
 	select c.cuenta_id, c.empleado_id, c.permiso_id, p.binario
 		from config.cuentas c
 			inner join private.permisos p on c.permiso_id = p.permiso_id
-             
+
+/*create or replace drop view config.v_sucursal_administradores as
+	select s.sucursal_id, s.distrito_id, s.subcategoria_id, s.imagen, s.adminstrador_id, s.ruc, s.rsocial, s.nombre, s.direccion, s.fregistro, p.documento, p.nombres, p.paterno, p.materno, p.telefono, p.correo
+		from config.sucursales s 
+			inner join private.personas p on s.adminstrador_id = p.persona_id*/
+
 /*----------------BASES PARA EL CIFRADO*/
 create table private.traductores(
 	traductor_id serial,
@@ -276,6 +281,18 @@ create table config.botones(/*los bonotes del sistema*/
 	titulo varchar (60) not null,
 	primary key(boton_id)	
 );
+create table private.tautorizadas(
+	tautorizada_id serial,
+	nombre varchar(30) not null,
+	tupla text not null,
+	primary key(tautorizada_id)
+);
+
+
+
+
+
+
 
 /*PRUEBAS*/
 /*-----2 Vista que detalla cuenta, rol y empleado------*/

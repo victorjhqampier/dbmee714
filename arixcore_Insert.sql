@@ -306,6 +306,7 @@ select * from config.v_persona_empleado;
 select * from config.v_cuenta_sucursal;
 select * from config.v_menu_subapp where app_id = 1002 and (rol = 5 OR rol = 7);
 select * from config.v_cuenta_permiso;
+--select * from config.v_sucursal_administradores;
 
 /*----------------BASES PARA EL CIFRADO-----------------*/
 insert into private.traductores (sal, llave) values
@@ -470,6 +471,21 @@ insert into config.botones(permiso,boton, icono, titulo) values
 (8,'btn-cerrar', 'fas fa-times','Cancelar'),
 (8,'btn-agregar', 'fas fa-plus','Nuevo');
 select * from config.botones;
+
+insert into private.tautorizadas (nombre, tupla) values 
+('sucursales','sucursal_id,sucpadre_id,distrito_id,subcategoria_id,adminstrador_id,imagen,ruc,rsocial,nombre,direccion,fregistro'),
+('areas',''),
+('empleados',''),
+('empcategorias',''),
+('profesiones',''),
+('apps',''),
+('departamentos',''),
+('provincias',''),
+('distritos','');
+
+
+
+
 select * from private.permisos
 
 /*---------ALGUNAS PRUEBAS------------------- */
