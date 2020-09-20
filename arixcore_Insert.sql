@@ -230,7 +230,7 @@ insert into nprivate_subapps (submenu_id, subapp, controller, rol) values
 (20011,'??ltimos registros','ultimos',7),(20011,'Actualizaci??n','actualizacion',6),
 (20012,'Impresos','impresos',7),(20012,'Pendientes','pendientes',7),(20012,'Duplicar','duplicar',6),(20012,'Caducos','caducos',6),
 (20013,'Estad??sticas','estadisticas',7),(20013,'Ingresos','ingresos',6);
-select * from private_subapps;
+select * from private.subapps;
 /*Instalacion pendiente --------end--------- */
 
 insert into private.submenus(submenu_id, app_id,submenu) values 
@@ -243,7 +243,7 @@ insert into private.subapps (submenu_id, subapp, controller, rol) values
 (10011,'Notificaciones','notificaciones',7)/*inicio*/,(10011,'Mensajer?a','mensajeria',7)/*buzon*/,(10011,'Contactos','contactos',7)/*Salida*/,
 	(10012,'Mis eventos','eventos',7),(10012,'Agenda','agenda',7), (10012,'Calendario','calendario',7),
 	(10013,'Ajustes generales','generales',7),(10013,'Perfil de usuario','perfilusuario',7)/*recomedanciomes*/, (10013,'Cuenta de usuario','cuentausuario',7),
-(10021,'Sucursales','sucursales',6),(10021,'?reas','areas',6),(10021,'Empleados','empleados',6), (10021,'Contrato','arixcontrata',4),
+(10021,'Todas las tiendas','sucursales',6),(10021,'?reas','areas',6),(10021,'Empleados','empleados',6), (10021,'Contrato','arixcontrata',4),
 	(10022,'Usuarios del sistema','usuarios',4),(10022,'Grupos','grupos',4),    
 	(10023,'Contabilidad','contabiblidad',7),(10023,'Reportes','reportes',7),(10023,'Impresoras','impresoras',6),(10023,'C?maras','camaras',6),
 	(10024,'Crear App','newapp',6),(10024,'Subir App','uploadapp',6),
@@ -251,8 +251,54 @@ insert into private.subapps (submenu_id, subapp, controller, rol) values
 select * from private.subapps;
 
 /*---------------CONFIG----------------------------------------*/
-insert into config.empcategorias(categoria_id,categoria) values
-('5e00416e2a8ac','TRANSPORTES'), ('5e0041a439b77','RESTAURANTES'),('5e004228a09df','CASAS DE CAMBIO'), ('5e00425c57126','MUNICIPALIDADES'),('5e06a10d99f2f','VENTAS GENERALES NO PERECIBLES');
+--al sistema no le importa la jerarquia de los departamentos, null = un unico departamento para todas las tiendas
+insert into config.departamentos (departamento_id, departamento_padre, departamento) values
+(1,null,'DEPARTAMENTO DE DIRECCIÓN GENERAL'),
+(2,1,'DEPARTAMENTO DE ADMINISTRACIÓN'),
+(3,1,'DEPARTAMENTO DE ALMACÉN'),
+(4,1,'DEPARTAMENTO DE COMPRAS'),
+(5,1,'DEPARTAMENTO DE CONTABILIDAD'),
+(6,1,'DEPARTAMENTO DE FINANZAS'),
+(7,1,'DEPARTAMENTO DE LOGÍSTICA'),
+(8,1,'DEPARTAMENTO DE MARKETING'),
+(9,1,'DEPARTAMENTO DE PRODUCCIÓN'),
+(10,1,'DEPARTAMENTO DE RECURSOS HUMANOS'),
+(11,1,'DEPARTAMENTO DE TECNOLOGIAS DE LA INFORMACION Y COMUNICACIÓN'),
+(12,1,'DEPARTAMENTO DE VENTAS Y COMERCIAL'),
+(13,1,'DEPARTAMENTO DE INVESTIGACIÓN');
+select * from config.departamentos;
+
+insert into config.puestos (puesto_id, departamento_id, puesto) values
+(1, 1, 'CEO - DIRECTOR EJECUTIVO'),
+(2, 2, 'COO - DIRECTOR DE OPERACIONES'),
+(3, 3, 'DIRECTOR DE ALMACÉN'),
+(4, 4, 'DIRECTOR DE COMPRAS'),
+(5, 5, 'DIRECTOR DE CONTABILIDAD'),
+(6, 6, 'CFO - DIRECTOR DE FINANZAS'),
+(7, 7, 'DIRECTOR DE LOGISTICA'),
+(8, 8, 'CMO -  DIRECTOR DE MARKETING'),
+(9, 9, 'DIRECTOR DE PRODUCCIÓN'),
+(10, 10, 'DIRECTOR DE RECURSOS HUMANOS'),
+(11, 11, 'CIO - DIRECTOR DE TECNOLOGÍA'),
+(12, 12, 'DIRECTOR DE VENTAS'),
+(13, 13, 'DIRECTOR DE INVESTIGACIÓN'),
+(14, 1,'ASISTENTE EJECUTIVO'),
+(15, 2,'ASISTENTE DE OPERACIONES'),
+(16, 3,'ASISTENTE DE ALMACÉN'),
+(17, 4,'ASISTENTE DE COMPRAS'),
+(18, 5,'ASISTENTE DE CONTABILIDAD'),
+(19, 6,'ASISTENTE DE FINANZAS'),
+(20, 7,'ASISTENTE DE LOGISTICA'),
+(21, 8,'ASISTENTE DE MARKETING'),
+(22, 9,'ASISTENTE DE PRODUCCIÓN'),
+(23, 10,'ASISTENTE DE RECURSOS HUMANOS'),
+(24, 11,'ASISTENTE DE TECNOLOGÍA'),
+(25, 12,'ASISTENTE DE VENTAS'),
+(26, 13,'ASISTENTE DE INVESTIGACIÓN');
+select * from config.puestos;
+
+insert into config.empcategorias(categoria_id,categoria) values 
+('5e00416e2a8ac','TRANSPORTES'), ('5e0041a439b77','RESTAURANTES'),('5e004228a09df','CASAS DE CAMBIO'), ('5e00425c57126','MUNICIPALIDADES'),('5e06a10d99f2f','VENTAS GENERALES NO PERECIBLES'),('5e06a10d9922f','PRENDAS DE VESTIR'),('5e06a10df922f','BEBIDAS ENVASADAS');
 select * from config.empcategorias;
 
 insert into config.empsubcategorias (subcategoria_id,categoria_id, subcategoria) values
@@ -260,13 +306,22 @@ insert into config.empsubcategorias (subcategoria_id,categoria_id, subcategoria)
 ('5e004559dd082','5e0041a439b77','PARA TODOS LAS SUBCATEGORIAS'),('5e004575e63e9','5e0041a439b77','POLLERIAS,QUINTAS,CHIFAS'),('5e00458d0f767','5e0041a439b77','CAFETER?AS'),('5e0045a91658f','5e0041a439b77','HELADER?AS'),
 ('5e0045c709f8f','5e004228a09df','PARA TODOS LAS SUBCATEGORIAS'),('5e0045f3115bc','5e004228a09df','PRESTAMINSTAS'),
 ('5e0046140bfc5','5e00425c57126','PARA TODOS LAS SUBCATEGORIAS'),('5e0046928c2c0','5e00425c57126','REGIONALES'),('5e0046928c2cb','5e00425c57126','PROVINCIALES'),('5e0046c7be21f','5e00425c57126','DISTRITALES'),
-('5e06a94011b2e','5e06a10d99f2f','TODAS LAS CATEGORIAS'), ('5e06a9540f609','5e06a10d99f2f','VENTAS AL POR MENOR'),('5e06a96422c71','5e06a10d99f2f','VENTAS AL POR MAYOR');
-select * from config.empsubcategorias where subcategoria_id = '5e0044bde3e45';
+('5e06a94011b2e','5e06a10d99f2f','TODAS LAS CATEGORIAS'), ('5e06a9540f609','5e06a10d99f2f','VENTAS AL POR MENOR'),('5e06a96422c71','5e06a10d99f2f','VENTAS AL POR MAYOR'),
+('5f666eed1cf97','5e06a10d9922f','TODAS LAS CATEGORIAS'), ('5f666f37477ef','5e06a10d9922f','VENTAS AL POR MENOR'),('5f666f4e64c4a','5e06a10d9922f','VENTAS AL POR MAYOR'),
+('5f666f78dfb48','5e06a10df922f','TODAS LAS CATEGORIAS'), ('5f666facb6592','5e06a10df922f','VENTAS AL POR MENOR'),('5f666fd5e3f7b','5e06a10df922f','VENTAS AL POR MAYOR');
+select * from config.empsubcategorias
 /**ESTO DEBE CAMBIAR SEGUN LA EMPRESA*/
 
-insert into config.sucursales (sucpadre_id, distrito_id, subcategoria_id, adminstrador_id, ruc, imagen, rsocial, nombre, direccion) values
-(null, 1594, '5e0044bde3e45', 1, '2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'SHOPDAY SEDE CENTRAL', 'Jr. Andino 1235 frente a la Comisaria');
+insert into config.sucursales (sucpadre_id, distrito_id, subcategoria_id, adminstrador_id, numero, ruc, imagen, rsocial, nombre, direccion) values
+(null, 1594, '5f666eed1cf97', 1, 100,'2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'SHOPDAY SEDE CENTRAL', 'Jr. Andino 1235 frente a la Comisaria');
 select * from config.sucursales;
+/* DATOS DE PRUEBA
+insert into config.sucursales (distrito_id, subcategoria_id, adminstrador_id, numero, ruc, imagen, rsocial, nombre, direccion,estado) values
+(1594, '5f666f37477ef', 2, 101,'2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'EL ROPERO DEL ESQUELETO', 'Jr. Ajacucho 1234',true),
+(1594, '5f666f37477ef', 1, 102,'2014624708' ,'609f436c933f6813f16092f6ff87a1da.jpg', 'SHOPDAY E.R.L', 'EL TORO POR LAS BOLAS', 'Jr. Amamzonar 34 segundo piso',false),
+(1641, '5f666f4e64c4a', 2, 103,'2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'LA CASA DE DOÑA JULIA', 'Jr. Artiagua calle 2 piso 2 stand 4',true),
+(1641, '5f666f4e64c4a', 2, 103,'2014624708' ,'609f436c933f6813f16092f6ff87a1da.jpg', 'SHOPDAY E.R.L', 'MODA Y ESTILO SHOPDAY', 'Jr. Arica frente al ejercito del perú',false);*/
+--update config.sucursales SET numero = 101 where sucursal_id = 2
 
 insert into config.areas(sucursal_id, areaminimal, area, funciones) values 
 (1, 'B1-D01', 'DEPARTAMENTO DE ADMINISTRACI?N', 'ADMINISTRAR LA BIBLIOTECA'),

@@ -96,6 +96,27 @@ create table private.subapps(
 
 /*---------------CONFIG----------------------------------------*/
 create schema config;
+
+create table config.departamentos(
+	departamento_id int not null,
+	departamento_padre int default 2,
+	departamento varchar(70) not null,
+	factualizacion TIMESTAMP not null default current_timestamp,
+	fregistro TIMESTAMP not null default current_timestamp,
+	foreign key (departamento_padre) references config.departamentos(departamento_id),
+	primary key (departamento_id)
+);
+
+create table config.puestos(
+	puesto_id int not null,
+	departamento_id int not null,
+	puesto varchar(70) not null,
+	factualizacion TIMESTAMP not null default current_timestamp,
+	fregistro TIMESTAMP not null default current_timestamp,
+	foreign key (departamento_id) references config.departamentos(departamento_id),
+	primary key (puesto_id)	
+);
+
 create table config.empcategorias( /*compcategorias_C08*/
 	categoria_id char(13) not null,
 	categoria VARCHAR(50) not null,
@@ -114,19 +135,28 @@ create table config.sucursales (
 	sucpadre_id INT default 1,
 	distrito_id INT not null,
     subcategoria_id char(13) not null,
+    numero int not null,
     imagen varchar(80) not null,
     adminstrador_id INT not null,
 	ruc VARCHAR(11) not null,
 	rsocial VARCHAR(90) not null,
 	nombre VARCHAR(80) not null,
 	direccion VARCHAR(80) not null,
+	estado boolean not null default true,
 	fregistro TIMESTAMP not null default current_timestamp,
     foreign key (sucpadre_id) references config.sucursales(sucursal_id),/*cambiar*/
     foreign key (distrito_id) references private.distritos (distrito_id),
     foreign key (adminstrador_id) references private.personas(persona_id),
     foreign key (subcategoria_id) references config.empsubcategorias(subcategoria_id),
     primary key (sucursal_id)
+); CREATE INDEX index_sucursales_num ON config.sucursales (numero);
+--alter table config.sucursales ADD COLUMN estado boolean not null default true
+--ALTER TABLE config.sucursales rename COLUMN numero to numero int not null
+
+create table config.oficinas(
+	
 );
+
 create table config.areas(
 	area_id SERIAL,
 	sucursal_id INT not null,
@@ -144,6 +174,7 @@ create table config.profesiones(
     primary key (profesion_id)
 );
 
+drop table config.empleados;
 create table config.empleados(
 	empleado_id SERIAL,
     persona_id int not null,
@@ -160,7 +191,7 @@ create table config.empleados(
 	foreign key (profesion_id) references config.profesiones (profesion_id),
 	primary key (empleado_id)
 );
-
+drop table config.cuentas
 create table config.cuentas (
 	cuenta_id serial,
 	empleado_id INT not null,
@@ -178,7 +209,7 @@ create table config.cuentas (
 	primary key (cuenta_id)
 );
 /*ALTER TABLE config.cuentas  ALTER COLUMN passini TYPE VARCHAR(100);*/
-
+drop table config.cuentaapprol;
 create table config.cuentaapprol(
 	app_id INT not null,
 	cuenta_id INT not null,
@@ -190,6 +221,7 @@ create table config.cuentaapprol(
 	primary key (app_id,cuenta_id)	
 );
 
+drop table config.cuentasucursal;
 create table config.cuentasucursal(
 	cuenta_id int not null,
 	sucursal_id int not null,
@@ -200,11 +232,13 @@ create table config.cuentasucursal(
 
 /*---------VISTAS PARA CONFIG------------------- */
 /*Consulta para enlistar las aplicaciones de un usuario*/
+drop VIEW config.v_cuenta_sucursal;
 CREATE VIEW config.v_cuenta_sucursal as
 select s.nombre, cs.cuenta_id, cs.sucursal_id from config.cuentasucursal cs
 	inner join config.sucursales s on cs.sucursal_id = s.sucursal_id
 
 /*-----Vista que detalla app, cuenta y rol------*/
+	drop VIEW config.v_cuenta_app_rol;
 CREATE VIEW config.v_cuenta_app_rol AS 
 select
    ca.cuenta_id, a.app_id, a.id_app, a.app, a.controller, r.rol_id, r.rol
@@ -219,6 +253,7 @@ from
 /*-----end view------*/
 
 /*-----3 Vista que detalla submenus y subapp de cada app------*/
+drop VIEW config.v_menu_subapp;
 CREATE OR REPLACE VIEW config.v_menu_subapp AS
 select
 	ap.subapp_id,
@@ -234,13 +269,15 @@ from
       private.subapps ap 
       on me.submenu_id = ap.submenu_id;
 
+drop view config.v_persona_empleado_cuenta;
 create or replace view config.v_persona_empleado_cuenta as
 	select p.documento, e.codigo, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
 		e.profesion_id, e.fmodificacion, e.fregistro, c.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.cuenta_id
 		from private.personas p
 			inner join config.empleados e on p.persona_id = e.persona_id
 				inner join config.cuentas c on e.empleado_id = c.empleado_id;
-
+			
+drop view config.v_persona_empleado;
 create or replace view config.v_persona_empleado as 
 	select p.documento, e.codigo, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
 		e.profesion_id, e.fmodificacion, e.fregistro, e.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.estado ecuenta
@@ -248,15 +285,13 @@ create or replace view config.v_persona_empleado as
 			inner join config.empleados e on p.persona_id = e.persona_id
 				left join config.cuentas c on e.empleado_id = c.empleado_id
 
+drop view config.v_cuenta_permiso;
 create or replace view config.v_cuenta_permiso as 
 	select c.cuenta_id, c.empleado_id, c.permiso_id, p.binario
 		from config.cuentas c
 			inner join private.permisos p on c.permiso_id = p.permiso_id
 
-/*create or replace drop view config.v_sucursal_administradores as
-	select s.sucursal_id, s.distrito_id, s.subcategoria_id, s.imagen, s.adminstrador_id, s.ruc, s.rsocial, s.nombre, s.direccion, s.fregistro, p.documento, p.nombres, p.paterno, p.materno, p.telefono, p.correo
-		from config.sucursales s 
-			inner join private.personas p on s.adminstrador_id = p.persona_id*/
+
 
 /*----------------BASES PARA EL CIFRADO*/
 create table private.traductores(
