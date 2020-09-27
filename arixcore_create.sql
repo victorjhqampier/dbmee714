@@ -56,12 +56,13 @@ create table private.permisos(/*---para los permisos de los botones leer, crear,
 
 create table private.roles(
 	rol_id int not null,
-    id_rol int default 1,/*Rol padre*/
+    rol_padre int default 1,/*Rol padre*/
 	rol VARCHAR(15) not null,
-	descripcion VARCHAR(80) not null,
-    foreign key (id_rol) references private.roles(rol_id),
+	descripcion text default 'Sin descripcion',
+    foreign key (rol_padre) references private.roles(rol_id),
 	primary key (rol_id)    
 );
+
 create table private.apps (
 	app_id int not null check (app_id >1000),
     id_app int default 1001,
@@ -116,6 +117,11 @@ create table config.puestos(
 	foreign key (departamento_id) references config.departamentos(departamento_id),
 	primary key (puesto_id)	
 );
+create table config.profesiones(
+	profesion_id SERIAL,
+    profesion varchar (80) not null,
+    primary key (profesion_id)
+);
 
 create table config.empcategorias( /*compcategorias_C08*/
 	categoria_id char(13) not null,
@@ -153,36 +159,37 @@ create table config.sucursales (
 --alter table config.sucursales ADD COLUMN estado boolean not null default true
 --ALTER TABLE config.sucursales rename COLUMN numero to numero int not null
 
-create table config.oficinas(
-	
-);
-
 create table config.areas(
 	area_id SERIAL,
 	sucursal_id INT not null,
-    areaminimal VARCHAR(7) not null, /*Abreviatura*/
+	departamento_id INT not null,
+	estado boolean not null default false, --es un area unico? si = true, no = false
+	descripcion text not null,	
+	factualizacion TIMESTAMP not null default current_timestamp,
+	fregistro TIMESTAMP not null default current_timestamp,
+    foreign key (sucursal_id) references config.sucursales (sucursal_id),
+    foreign key (departamento_id) references config.departamentos (departamento_id),
+    primary key (area_id)
+);
+/*create table config.areas(
+	area_id SERIAL,
+	sucursal_id INT not null,
+    areaminimal VARCHAR(7) not null,
 	area VARCHAR(50) not null,
 	funciones VARCHAR(100) not null,
 	f_registro TIMESTAMP not null default current_timestamp,
     foreign key (sucursal_id) references config.sucursales (sucursal_id),
     primary key (area_id)
-);
+);*/
 
-create table config.profesiones(
-	profesion_id SERIAL,
-    profesion varchar (80) not null,
-    primary key (profesion_id)
-);
-
-drop table config.empleados;
-create table config.empleados(
+/*create table config.empleados(
 	empleado_id SERIAL,
     persona_id int not null,
 	area_id INT not null,
-    jefe_id INT default 1,/*DE ESTA MISMA TABLA*/
+    jefe_id INT default 1,
     profesion_id int not null,
     codigo char(6) not null,
-	estado BOOL not null default true, /*Activo o no*/
+	estado BOOL not null default true,
 	fregistro TIMESTAMP not null default current_timestamp,
     fmodificacion timestamp not null default current_timestamp,
 	foreign key (persona_id) references private.personas (persona_id),
@@ -190,11 +197,51 @@ create table config.empleados(
 	foreign key (area_id) references config.areas (area_id),
 	foreign key (profesion_id) references config.profesiones (profesion_id),
 	primary key (empleado_id)
+);*/
+
+--uno es empleado si y solo si, tiene un contrato vigente con la empresa
+create table config.contratos (
+	contrato_id serial,	
+	persona_id int not null,--empleado_id
+	area_id int not null,
+	puesto_id int not null, --cargo del empleado
+	contrato_padre int default 1,--usuarios principales no son mostrados en la interfaz
+	numero int not null, --numero de contrato
+	cinicio date not null,--segun el contrato
+	cfinal date default null,
+	estado boolean not null default true,-- true = vijente, false = terminado
+	finicio date not null,--segun formalmente, asistió
+	ffinal date default null, -- puede ser despedido, el contrato se anula
+	fregistro TIMESTAMP not null default current_timestamp,
+    fmodificacion timestamp not null default current_timestamp,
+    foreign key (persona_id) references private.personas (persona_id),
+    foreign key (area_id) references config.areas (area_id),
+    foreign key (puesto_id) references config.puestos(puesto_id),
+    foreign key (contrato_padre) references config.contratos(contrato_id),
+    primary key(contrato_id)
 );
-drop table config.cuentas
+
+/*+++++ESTOY AQUI+++++*/
+/*create table config.empleados(
+	empleado_id SERIAL,
+    persona_id int not null,
+	area_id INT not null,
+    jefe_id INT default 1,
+    profesion_id int not null,
+    codigo char(6) not null,
+	estado BOOL not null default true,
+	fregistro TIMESTAMP not null default current_timestamp,
+    fmodificacion timestamp not null default current_timestamp,
+	foreign key (persona_id) references private.personas (persona_id),
+	foreign key (jefe_id) references config.empleados (empleado_id),
+	foreign key (area_id) references config.areas (area_id),
+	foreign key (profesion_id) references config.profesiones (profesion_id),
+	primary key (empleado_id)
+);*/
+
 create table config.cuentas (
 	cuenta_id serial,
-	empleado_id INT not null,
+	contrato_id INT not null,
     root_id int default 1,/*Id del usuario root que todos dependen*/
     permiso_id int not null, /*Lectura o escritura*/
 	correo VARCHAR(100) not null unique,
@@ -203,17 +250,16 @@ create table config.cuentas (
 	estado BOOL default true, /*puede estar suspendido*/
 	fregistro timestamp not null default current_timestamp,
     fmodificacion timestamp not null default current_timestamp,
-	foreign key (empleado_id)  references config.empleados (empleado_id),
+	foreign key (contrato_id)  references config.contratos (contrato_id),
     foreign key (root_id)  references config.cuentas (cuenta_id),
     foreign key (permiso_id) references private.permisos(permiso_id),
 	primary key (cuenta_id)
 );
-/*ALTER TABLE config.cuentas  ALTER COLUMN passini TYPE VARCHAR(100);*/
-drop table config.cuentaapprol;
+
 create table config.cuentaapprol(
 	app_id INT not null,
 	cuenta_id INT not null,
-	rol_id INT not null default 1,
+	rol_id INT not null default 4,
 	fregistro TIMESTAMP not null default current_timestamp,
 	foreign key (app_id) references private.apps (app_id),
 	foreign key (cuenta_id) references config.cuentas (cuenta_id),
@@ -221,7 +267,6 @@ create table config.cuentaapprol(
 	primary key (app_id,cuenta_id)	
 );
 
-drop table config.cuentasucursal;
 create table config.cuentasucursal(
 	cuenta_id int not null,
 	sucursal_id int not null,
@@ -231,14 +276,12 @@ create table config.cuentasucursal(
 );
 
 /*---------VISTAS PARA CONFIG------------------- */
-/*Consulta para enlistar las aplicaciones de un usuario*/
-drop VIEW config.v_cuenta_sucursal;
+--Consulta para enlistar las sucursals asociadas a una cuenta
 CREATE VIEW config.v_cuenta_sucursal as
 select s.nombre, cs.cuenta_id, cs.sucursal_id from config.cuentasucursal cs
 	inner join config.sucursales s on cs.sucursal_id = s.sucursal_id
 
-/*-----Vista que detalla app, cuenta y rol------*/
-	drop VIEW config.v_cuenta_app_rol;
+--Vista que detalla app, cuenta y rol
 CREATE VIEW config.v_cuenta_app_rol AS 
 select
    ca.cuenta_id, a.app_id, a.id_app, a.app, a.controller, r.rol_id, r.rol
@@ -250,10 +293,8 @@ from
 	inner join 
 		private.roles r
 		on ca.rol_id = r.rol_id;
-/*-----end view------*/
 
-/*-----3 Vista que detalla submenus y subapp de cada app------*/
-drop VIEW config.v_menu_subapp;
+--Vista que detalla submenus y subapp de cada app
 CREATE OR REPLACE VIEW config.v_menu_subapp AS
 select
 	ap.subapp_id,
@@ -269,27 +310,28 @@ from
       private.subapps ap 
       on me.submenu_id = ap.submenu_id;
 
-drop view config.v_persona_empleado_cuenta;
+--Vista detalla la cuenta de usuario
 create or replace view config.v_persona_empleado_cuenta as
-	select p.documento, e.codigo, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
-		e.profesion_id, e.fmodificacion, e.fregistro, c.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.cuenta_id
-		from private.personas p
-			inner join config.empleados e on p.persona_id = e.persona_id
-				inner join config.cuentas c on e.empleado_id = c.empleado_id;
-			
-drop view config.v_persona_empleado;
+	select p.documento, p.nombres, p.paterno, p.materno, p.telefono, p.fotografia, p.direccion, p.correo,
+		e.fmodificacion, e.fregistro, c.estado, e.area_id, p.distrito_id, p.persona_id, c.cuenta_id
+	from private.personas p
+		inner join config.contratos e on p.persona_id = e.persona_id
+		inner join config.cuentas c on e.contrato_id = c.contrato_id;
+	
+-- Vista que detalla al empleado
 create or replace view config.v_persona_empleado as 
-	select p.documento, e.codigo, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
-		e.profesion_id, e.fmodificacion, e.fregistro, e.estado, e.jefe_id, e.area_id, p.distrito_id, p.persona_id, e.empleado_id, c.estado ecuenta
-		from private.personas p
-			inner join config.empleados e on p.persona_id = e.persona_id
-				left join config.cuentas c on e.empleado_id = c.empleado_id
-
-drop view config.v_cuenta_permiso;
+	select p.documento, e.numero, p.nombres, p.paterno, p.materno, p.nacimiento, p.sexo, p.telefono, p.fotografia, p.direccion, p.correo,
+		e.fmodificacion, e.fregistro, e.estado econtrato, c.estado ecuenta, e.cinicio, e.cfinal, e.area_id, e.puesto_id, p.distrito_id, p.persona_id 
+	from private.personas p
+		inner join config.contratos e on p.persona_id = e.persona_id
+		left join config.cuentas c on e.contrato_id = c.contrato_id
+		
+--Vista que detalla los permisos asociados a una cuenta
 create or replace view config.v_cuenta_permiso as 
-	select c.cuenta_id, c.empleado_id, c.permiso_id, p.binario
+	select c.cuenta_id, c.contrato_id, c.permiso_id, p.binario
 		from config.cuentas c
-			inner join private.permisos p on c.permiso_id = p.permiso_id
+		inner join private.permisos p on c.permiso_id = p.permiso_id
+table private.permisos 
 
 
 

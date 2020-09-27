@@ -187,10 +187,11 @@ INSERT INTO private.distritos (distrito_id, distrito, provincia_id) VALUES
 (1817, 'PAPAYAL', 189), (1818, 'CALLERIA', 190), (1819, 'CAMPOVERDE', 190), (1820, 'IPARIA', 190), (1821, 'MASISEA', 190), (1822, 'YARINACOCHA', 190), (1823, 'NUEVA REQUENA', 190), (1824, 'RAYMONDI', 191), (1825, 'SEPAHUA', 191), (1826, 'TAHUANIA', 191), (1827, 'YURUA', 191), (1828, 'PADRE ABAD', 192), (1829, 'IRAZOLA', 192), (1830, 'CURIMANA', 192), (1831, 'PURUS', 193);
 select * from private.distritos where distrito = 'ILAVE';
 
-insert into private.personas(distrito_id, documento, nombres, paterno, materno, nacimiento, sexo, telefono, fotografia, direccion, correo) values
+insert into private.personas(distrito_id, documento, nombres, paterno, materno, nacimiento, sexo, telefono, fotografia, direccion, correo) values 
 (1641, '48207109', 'VICTOR JHAMPIER', 'CAXI', 'MAQUERA', '1994/03/28', 1, '968991714', 'public/images/users/tu39hnri84fhe2.png', 'Jr. Amazonas 1234', 'victorjhampier@gmail.com'),
 (1728, '70240254', 'GUIDO PEDRO', 'JARA', 'ACCHA', '1989/06/27', 1, '931864569', 'public/images/users/tu39hWR45Rgfh78gfr.png', 'BARRIO SAN FRANCISCO JAVIER', 'jaraperdo_345@hotmail.com'),
-(1641, '47698577', 'MARIA CLARET', 'JULI', 'TARAPA', '1992/06/27', 2, '931423569', 'public/images/users/tu39hWR45Rgfh787GYgfr.png', 'BARRIO SAN FRANCISCO JAVIER', 'claret_35_maria5@hotmail.com');
+(1641, '47698577', 'MARIA CLARET', 'JULI', 'TARAPA', '1992/06/27', 2, '931423569', 'public/images/users/tu39hWR45Rgfh787GYgfr.png', 'BARRIO SAN FRANCISCO JAVIER', 'claret_35_maria5@hotmail.com'),
+(1641, '47698345', 'FRANSYS KATIA', 'APAZA', 'MILLINEDO', '2000/06/27', 2, '931356944', 'public/images/users/tu39hWR45Rgfh787GYgfr.png', 'Jr. 28 de Marzo', 'katia_27_del@hotmail.com');
 select * from private.personas;
 
 insert into private.permisos values
@@ -204,12 +205,19 @@ insert into private.permisos values
 (15, 1111, 'LEER, ESCRIBIR, ACTUALIZAR, BORRAR');
 select * from private.permisos;
 
-insert into private.roles (rol_id, rol, descripcion) values
+/*insert into private.roles (rol_id, rol, descripcion) values
 (1,'Ninguno','Sin privilegios en el sistema'),
 (2,'Superusuario','Tiene permiso para acceder a todos los elementos del sistema'),
 (3,'Administrador','Tiene permiso pata acceder a elementos de asistencia del sistema'),
 (4,'Asistente','crear, actulizar, enviar');
-update private.roles set id_rol=null where rol_id =1;
+update private.roles set id_rol=null where rol_id =1;*/
+--elegir los roles, dedenden del analisis del progrmamdor
+insert into private.roles (rol_id, rol_padre, rol, descripcion) values
+(1, null, 'Superusuario','Tiene permiso para acceder a todos los elementos del sistema');
+insert into private.roles (rol_id, rol, descripcion) values
+(2,'Administrador','Tiene permiso pata acceder a elementos de asistencia del sistema'),
+(3,'Asistente','crear, actulizar, enviar'),
+(4,'Ninguno','Sin acceso a la aplicación');
 select * from private.roles;
 
 insert into private.apps (app_id, app, controller, autor, awebsite, version, descricpcion) values 
@@ -297,6 +305,11 @@ insert into config.puestos (puesto_id, departamento_id, puesto) values
 (26, 13,'ASISTENTE DE INVESTIGACIÓN');
 select * from config.puestos;
 
+insert into config.profesiones(profesion) values
+('No Definido'), ('SECUNRIA COMPLETA'),('ESTUDIANTE'),('INGENIERO'), ('LICENCIADO'), ('ABOGADO'), ('PROFESOR'),
+('INGENIERO DE SISTEMAS'), ('INGENIERO ESTADISTICO');
+select * from config.profesiones;
+
 insert into config.empcategorias(categoria_id,categoria) values 
 ('5e00416e2a8ac','TRANSPORTES'), ('5e0041a439b77','RESTAURANTES'),('5e004228a09df','CASAS DE CAMBIO'), ('5e00425c57126','MUNICIPALIDADES'),('5e06a10d99f2f','VENTAS GENERALES NO PERECIBLES'),('5e06a10d9922f','PRENDAS DE VESTIR'),('5e06a10df922f','BEBIDAS ENVASADAS');
 select * from config.empcategorias;
@@ -323,35 +336,82 @@ insert into config.sucursales (distrito_id, subcategoria_id, adminstrador_id, nu
 (1641, '5f666f4e64c4a', 2, 103,'2014624708' ,'609f436c933f6813f16092f6ff87a1da.jpg', 'SHOPDAY E.R.L', 'MODA Y ESTILO SHOPDAY', 'Jr. Arica frente al ejercito del perú',false);*/
 --update config.sucursales SET numero = 101 where sucursal_id = 2
 
-insert into config.areas(sucursal_id, areaminimal, area, funciones) values 
-(1, 'B1-D01', 'DEPARTAMENTO DE ADMINISTRACI?N', 'ADMINISTRAR LA BIBLIOTECA'),
-(1, 'B1-D02', 'DEPARTAMENTO DE CIRCULACI?N', 'ADMINISTRAR LOS DOCUMENTOS DE LA BIBLIOTECA'),
-(1, 'B1-D03', 'DEPARTAMENTO DE CATALOGACI?N', 'ADMINISTRAR RECUSOS INFORM?TICOS DE LA BIBLIOTECA'),
-(2, 'C1-D01', 'DEPARTAMENTO DE ADMINISTRACI?N', 'ADMINISTRAR LA CASA DE CULTURA'),
-(2, 'C1-D02', 'DEPARTAMENTO DE ATENCI?N AL CLIENTE', 'ADMINISTRAR LOS DOCUMENTOS DE LA BIBLIOTECA');
+-- anterior insert into config.areas(sucursal_id, areaminimal, area, funciones) values
+--(1, 'B1-D01', 'DEPARTAMENTO DE ADMINISTRACI?N', 'ADMINISTRAR LA BIBLIOTECA'),
+insert into config.areas(sucursal_id, departamento_id,estado ,descripcion) values
+(1,1,true,'Departamento de dirección único para toda la empresa, todas las tiendas comparten este departamento');
 select * from config.areas;
+--DATOS DE PUERBA
+/*select * from config.departamentos
+update config.departamentos set departamento_padre = null where departamento_id = 3
+insert into config.areas(sucursal_id, departamento_id, estado, descripcion) values
+(1,2,true,'Departamento de administración único para toda la empresa, todas las tiendas comparten este departamento'),
+(1,3,true,'Departamento de marketing único para toda la empresa, todas las tiendas comparten este departamento'),
+(1,5,false,'Departamento de contabilidad tienda a'),
+(1,4,false,'Departamento de compras tienda a'),
+(1,12,false,'Departamento de ventas a'),
+(2,5,false,'Departamento de contabilidad tienda b'),
+(2,4,false,'Departamento de compras tienda b'),
+(2,12,false,'Departamento de ventas b'),
+(3,5,false,'Departamento de contabilidad tienda c'),
+(3,4,false,'Departamento de compras tienda c'),
+(3,12,false,'Departamento de ventas c'),
+(4,5,false,'Departamento de contabilidad tienda d'),
+(4,4,false,'Departamento de compras tienda d'),
+(4,12,false,'Departamento de ventas d'),
+(5,5,false,'Departamento de contabilidad tienda e'),
+(5,1,false,'Departamento de compras tienda e'),
+(5,12,false,'Departamento de ventas e');
+*/
 
-insert into config.profesiones(profesion) values
-('No Definido'), ('SECUNRIA COMPLETA'),('ESTUDIANTE'),('INGENIERO'), ('LICENCIADO'), ('ABOGADO'), ('PROFESOR'),
-('INGENIERO DE SISTEMAS'), ('INGENIERO ESTADISTICO');
-select * from config.profesiones;
+insert into config.contratos (persona_id, area_id, puesto_id, contrato_padre, numero, cinicio, finicio) values 
+(1, 1, 1, null, 0, '26/09/2020', '26/09/2020');
+select * from config.contratos;
+--DATOS DE PRUEBA
+/*insert into config.contratos (persona_id, area_id, puesto_id, numero, cinicio, finicio, cfinal, ffinal) values 
+(4, 16, 5, 1, '26/09/2020', '26/09/2020','26/09/2021','26/09/2021'),
+(2, 1, 1, 1, '26/09/2020', '26/09/2020',null,null),
+(3, 1, 1, 1, '26/09/2020', '26/09/2020','26/09/2021','26/09/2021');*/
 
-insert into config.empleados(persona_id, area_id, jefe_id, profesion_id, codigo) values
+
+/*insert into config.empleados(persona_id, area_id, jefe_id, profesion_id, codigo) values
 (1, 1, null, 8, '134118'), (3, 1, 1, 2, '018284');
-select * from config.empleados;
+select * from config.empleados;*/
 /*update config.empleados set persona_id = 3 where empleado_id = 2*/
 
-insert into config.cuentas (empleado_id, root_id,permiso_id, correo, pass, passini) values
+/*insert into config.cuentas (empleado_id, root_id,permiso_id, correo, pass, passini) values
 (1, NULL,15, 'victorjhamnpier@gmail.com', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq');
-select * from config.cuentas;
+select * from config.cuentas;*/
 
+insert into config.cuentas (contrato_id, root_id, permiso_id, correo, pass, passini) values
+(1, NULL,15, 'victorjhampier@gmail.com', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq');
+select * from config.cuentas;
+--DATOS PRUEBA
+/*insert into config.cuentas (contrato_id, permiso_id, correo, pass, passini) values
+(2, 14, 'usuario@gmail.com', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq'),
+(3, 12, 'usuario2@gmail.com', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq', '$2y$12$h4xQuD3agbhps4U7deO61Ok6Kxer9/JU8M.Kq4.DGvdXg99qO89Gq');
+*/
+
+--Cada vez que se instala una app, un trigger debe agregar al usuario root (newaapp cuento 1, rol 1)
+--Root Por defecto a todas las apps
 insert into config.cuentaapprol (app_id, cuenta_id, rol_id) values
-(1001,2,2), (1002,1,2), (1003,1,2);/*Root Por defecto a todas las apps*/
+(1001,1,1), (1002,1,1), (1003,1,1);
 select * from config.cuentaapprol;
+--DATOS PRUBA
+/*insert into config.cuentaapprol (app_id, cuenta_id, rol_id) values
+(1001,2,2), (1002,2,4), (1003,2,2),
+(1001,3,2), (1002,3,4), (1003,3,4);
+*/
 
 insert into config.cuentasucursal (cuenta_id, sucursal_id) values
-(1,1),(1,2);
+(1,1),(1,2),(1,3),(1,4),(1,5);
 select * from config.cuentasucursal;
+--DATOS DE PRUEBA
+/*insert into config.cuentasucursal (cuenta_id, sucursal_id) values
+(2,1),(2,2),(2,3),
+(3,1),(3,2);
+*/
+
 
 
 /*---------CONSULTAS PARA LAS VISTAS PARA CONFIG------------------- */
