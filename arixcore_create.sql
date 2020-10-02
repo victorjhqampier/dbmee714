@@ -276,10 +276,16 @@ create table config.cuentasucursal(
 );
 
 /*---------VISTAS PARA CONFIG------------------- */
+CREATE or replace VIEW config.v_cuenta_permiso as
+select c.permiso_id, p.binario, c.cuenta_id
+	from config.cuentas c 
+	inner join private.permisos p on c.permiso_id = p.permiso_id;
+
 --Consulta para enlistar las sucursals asociadas a una cuenta
-CREATE VIEW config.v_cuenta_sucursal as
-select s.nombre, cs.cuenta_id, cs.sucursal_id from config.cuentasucursal cs
-	inner join config.sucursales s on cs.sucursal_id = s.sucursal_id
+CREATE or replace VIEW config.v_cuenta_sucursal as
+select s.nombre, cs.cuenta_id, cs.sucursal_id, s.estado, s.numero
+	from config.cuentasucursal cs
+	inner join config.sucursales s on cs.sucursal_id = s.sucursal_id;
 
 --Vista que detalla app, cuenta y rol
 CREATE VIEW config.v_cuenta_app_rol AS 

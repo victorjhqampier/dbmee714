@@ -397,10 +397,12 @@ select * from config.cuentas;
 insert into config.cuentaapprol (app_id, cuenta_id, rol_id) values
 (1001,1,1), (1002,1,1), (1003,1,1);
 select * from config.cuentaapprol;
+
+select * from config.cuentaapprol where cuenta_id = 3
 --DATOS PRUBA
 /*insert into config.cuentaapprol (app_id, cuenta_id, rol_id) values
-(1001,2,2), (1002,2,4), (1003,2,2),
-(1001,3,2), (1002,3,4), (1003,3,4);
+(1001,2,2), (1002,2,3), (1003,2,4),
+(1001,3,2), (1002,3,2), (1003,3,3);
 */
 
 insert into config.cuentasucursal (cuenta_id, sucursal_id) values
@@ -412,8 +414,6 @@ select * from config.cuentasucursal;
 (3,1),(3,2);
 */
 
-
-
 /*---------CONSULTAS PARA LAS VISTAS PARA CONFIG------------------- */
 select * from config.v_cuenta_app_rol WHERE cuenta_id = 1 and app_id = 1001 controller = 'arixstore' and id_app is null;
 select * from config.v_persona_empleado_cuenta;
@@ -421,6 +421,9 @@ select * from config.v_persona_empleado;
 select * from config.v_cuenta_sucursal;
 select * from config.v_menu_subapp where app_id = 1002 and (rol = 5 OR rol = 7);
 select * from config.v_cuenta_permiso;
+
+select * from config.v_cuenta_sucursal where cuenta_id = 1 and estado = true;
+select * from config.sucursales
 --select * from config.v_sucursal_administradores;
 
 /*----------------BASES PARA EL CIFRADO-----------------*/
