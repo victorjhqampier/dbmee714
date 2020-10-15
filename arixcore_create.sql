@@ -143,7 +143,6 @@ create table config.sucursales (
     subcategoria_id char(13) not null,
     numero int not null,
     imagen varchar(80) not null,
-    adminstrador_id INT not null,
 	ruc VARCHAR(11) not null,
 	rsocial VARCHAR(90) not null,
 	nombre VARCHAR(80) not null,
@@ -152,7 +151,6 @@ create table config.sucursales (
 	fregistro TIMESTAMP not null default current_timestamp,
     foreign key (sucpadre_id) references config.sucursales(sucursal_id),/*cambiar*/
     foreign key (distrito_id) references private.distritos (distrito_id),
-    foreign key (adminstrador_id) references private.personas(persona_id),
     foreign key (subcategoria_id) references config.empsubcategorias(subcategoria_id),
     primary key (sucursal_id)
 ); CREATE INDEX index_sucursales_num ON config.sucursales (numero);
@@ -364,13 +362,20 @@ create table config.botones(/*los bonotes del sistema*/
 	titulo varchar (60) not null,
 	primary key(boton_id)	
 );
-create table private.tautorizadas(
-	tautorizada_id serial,
-	nombre varchar(30) not null,
-	tupla text not null,
-	primary key(tautorizada_id)
+--Estas tablas pueden ser leidas accedidas desde otras app a parde de: (inicio, configuraciones, arix core)
+create table private.tabla_publicas(
+	tabla_publica_id serial,
+	tabla varchar(30) not null,
+	tuplas text not null,
+	primary key(tabla_publica_id)
 );
-
+create table private.tabla_dependencias(
+	tabla_publica_id int not null,
+	tabla_publica_dependencia int not null,
+	foreign key (tabla_publica_id) references private.tabla_dependencias (tabla_publica_id),
+	foreign key (tabla_publica_dependencia) references private.tabla_dependencias (tabla_publica_id),
+	primary key (tabla_publica_id)
+);
 
 
 

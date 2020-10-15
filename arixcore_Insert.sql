@@ -570,6 +570,11 @@ insert into config.recursos(recurso, direction,tipo) values
 ('configuraciones-arixjs','base_url();public/resources/js/arixjs-configuraciones.js',1),
 ('arixstore-arixjs','base_url();public/resources/js/arixjs-arixstore.js',1);
 select * from config.recursos;
+
+SELECT * FROM private.traductores 
+where true
+LIMIT 20 OFFSET 10
+
 /*delete from config.recursos where direction = 'datatables-demo';
 update config.recursos SET direction = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js' 
 where recurso_id = 3*/
@@ -590,8 +595,13 @@ insert into config.botones(permiso,boton, icono, titulo) values
 (8,'btn-agregar', 'fas fa-plus','Nuevo');
 select * from config.botones;
 
-insert into private.tautorizadas (nombre, tupla) values 
-('sucursales','sucursal_id,sucpadre_id,distrito_id,subcategoria_id,adminstrador_id,imagen,ruc,rsocial,nombre,direccion,fregistro'),
+select * from config.sucursales;
+
+--estoy aqui  sucursal -> distrito -> provimcia -> departamento
+-- sucursal -> sub categoria -> categoria
+insert into private.tabla_publicas (nombre, tupla) values 
+('config.sucursales','sucursal_id,sucpadre_id,distrito_id,subcategoria_id,numero,imagen,ruc,rsocial,nombre,direccion,estado,fregistro');
+
 ('areas',''),
 ('empleados',''),
 ('empcategorias',''),
@@ -601,7 +611,7 @@ insert into private.tautorizadas (nombre, tupla) values
 ('provincias',''),
 ('distritos','');
 
-
+select * from private.tautorizadas;
 
 
 select * from private.permisos
