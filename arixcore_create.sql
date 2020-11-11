@@ -169,33 +169,6 @@ create table config.areas(
     foreign key (departamento_id) references config.departamentos (departamento_id),
     primary key (area_id)
 );
-/*create table config.areas(
-	area_id SERIAL,
-	sucursal_id INT not null,
-    areaminimal VARCHAR(7) not null,
-	area VARCHAR(50) not null,
-	funciones VARCHAR(100) not null,
-	f_registro TIMESTAMP not null default current_timestamp,
-    foreign key (sucursal_id) references config.sucursales (sucursal_id),
-    primary key (area_id)
-);*/
-
-/*create table config.empleados(
-	empleado_id SERIAL,
-    persona_id int not null,
-	area_id INT not null,
-    jefe_id INT default 1,
-    profesion_id int not null,
-    codigo char(6) not null,
-	estado BOOL not null default true,
-	fregistro TIMESTAMP not null default current_timestamp,
-    fmodificacion timestamp not null default current_timestamp,
-	foreign key (persona_id) references private.personas (persona_id),
-	foreign key (jefe_id) references config.empleados (empleado_id),
-	foreign key (area_id) references config.areas (area_id),
-	foreign key (profesion_id) references config.profesiones (profesion_id),
-	primary key (empleado_id)
-);*/
 
 --uno es empleado si y solo si, tiene un contrato vigente con la empresa
 create table config.contratos (
@@ -337,9 +310,19 @@ create or replace view config.v_cuenta_permiso as
 		inner join private.permisos p on c.permiso_id = p.permiso_id
 table private.permisos 
 
+--vista que detalla distrito provincia departamento
+create or replace view config.v_distr_prov_depa as 
+	select di.distrito_id, di.provincia_id, pr.departamento_id, di.distrito, pr.provincia, de.departamento
+		from private.distritos di
+		inner join private.provincias pr on pr.provincia_id = di.provincia_id
+		inner join private.departamentos de on pr.departamento_id = de.departamento_id
+	where di.distrito_id = 1645
+
+
 
 
 /*----------------BASES PARA EL CIFRADO*/
+	select * from config.sucursales
 create table private.traductores(
 	traductor_id serial,
     sal char(13) not null unique,
@@ -364,12 +347,12 @@ create table config.botones(/*los bonotes del sistema*/
 );
 --Estas tablas pueden ser leidas accedidas desde otras app a parde de: (inicio, configuraciones, arix core)
 create table private.tabla_publicas(
-	tabla_publica_id serial,
+	tabla_publica_id int not null,
 	tabla varchar(30) not null,
 	tuplas text not null,
 	primary key(tabla_publica_id)
 );
-create table private.tabla_dependencias(
+create drop table private.tabla_dependencias(
 	tabla_publica_id int not null,
 	tabla_publica_dependencia int not null,
 	foreign key (tabla_publica_id) references private.tabla_dependencias (tabla_publica_id),

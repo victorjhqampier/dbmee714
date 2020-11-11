@@ -595,13 +595,15 @@ insert into config.botones(permiso,boton, icono, titulo) values
 (8,'btn-agregar', 'fas fa-plus','Nuevo');
 select * from config.botones;
 
-select * from config.sucursales;
-
 --estoy aqui  sucursal -> distrito -> provimcia -> departamento
 -- sucursal -> sub categoria -> categoria
-insert into private.tabla_publicas (nombre, tupla) values 
-('config.sucursales','sucursal_id,sucpadre_id,distrito_id,subcategoria_id,numero,imagen,ruc,rsocial,nombre,direccion,estado,fregistro');
 
+insert into private.tabla_publicas(tabla_publica_id, tabla, tuplas) values 
+(1,'config.sucursales','sucursal_id,sucpadre_id,distrito_id,subcategoria_id,numero,imagen,ruc,rsocial,nombre,direccion,estado,fregistro');
+
+
+
+select * from private.tabla_publicas;
 ('areas',''),
 ('empleados',''),
 ('empcategorias',''),
