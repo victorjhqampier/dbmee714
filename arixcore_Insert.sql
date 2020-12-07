@@ -310,11 +310,12 @@ insert into config.profesiones(profesion) values
 ('INGENIERO DE SISTEMAS'), ('INGENIERO ESTADISTICO');
 select * from config.profesiones;
 
-insert into config.empcategorias(categoria_id,categoria) values 
-('5e00416e2a8ac','TRANSPORTES'), ('5e0041a439b77','RESTAURANTES'),('5e004228a09df','CASAS DE CAMBIO'), ('5e00425c57126','MUNICIPALIDADES'),('5e06a10d99f2f','VENTAS GENERALES NO PERECIBLES'),('5e06a10d9922f','PRENDAS DE VESTIR'),('5e06a10df922f','BEBIDAS ENVASADAS');
-select * from config.empcategorias;
+insert into config.categorias(categoria_id,categoria) values
+('5e00416e2a8ac','TRANSPORTES'), ('5e0041a439b77','RESTAURANTES'),('5e004228a09df','CASAS DE CAMBIO'), ('5e00425c57126','MUNICIPALIDADES'),('5e06a10d99f2f','VENTAS GENERALES NO PERECIBLES'),('5e06a10d9922f','PRENDAS DE VESTIR'),('5e06a10df922f','BEBIDAS ENVASADAS'),('5e01a16e2a8b1','EDUCACIÓN');
+select * from config.categorias;
 
-insert into config.empsubcategorias (subcategoria_id,categoria_id, subcategoria) values
+insert into config.subcategorias (subcategoria_id,categoria_id, subcategoria) values
+('5fcdac4ee32e8','5e01a16e2a8b1','EDUCACIÓN INICIAL'), ('5fcdac8838229','5e01a16e2a8b1','EDUCACIÓN PRIMARIA'), ('5fcdaca739ce6','5e01a16e2a8b1','EDUCACIÓN SECUNDARIA'),
 ('5e0044bde3e45','5e00416e2a8ac','PARA TODOS LAS SUBCATEGORIAS'),('5e004521def7d','5e00416e2a8ac','TRANSPORTE REGIONAL'),('5e00453c3395c','5e00416e2a8ac','TRANSPORTE PROVINCIAL'),
 ('5e004559dd082','5e0041a439b77','PARA TODOS LAS SUBCATEGORIAS'),('5e004575e63e9','5e0041a439b77','POLLERIAS,QUINTAS,CHIFAS'),('5e00458d0f767','5e0041a439b77','CAFETER?AS'),('5e0045a91658f','5e0041a439b77','HELADER?AS'),
 ('5e0045c709f8f','5e004228a09df','PARA TODOS LAS SUBCATEGORIAS'),('5e0045f3115bc','5e004228a09df','PRESTAMINSTAS'),
@@ -322,12 +323,13 @@ insert into config.empsubcategorias (subcategoria_id,categoria_id, subcategoria)
 ('5e06a94011b2e','5e06a10d99f2f','TODAS LAS CATEGORIAS'), ('5e06a9540f609','5e06a10d99f2f','VENTAS AL POR MENOR'),('5e06a96422c71','5e06a10d99f2f','VENTAS AL POR MAYOR'),
 ('5f666eed1cf97','5e06a10d9922f','TODAS LAS CATEGORIAS'), ('5f666f37477ef','5e06a10d9922f','VENTAS AL POR MENOR'),('5f666f4e64c4a','5e06a10d9922f','VENTAS AL POR MAYOR'),
 ('5f666f78dfb48','5e06a10df922f','TODAS LAS CATEGORIAS'), ('5f666facb6592','5e06a10df922f','VENTAS AL POR MENOR'),('5f666fd5e3f7b','5e06a10df922f','VENTAS AL POR MAYOR');
-select * from config.empsubcategorias
+select * from config.subcategorias;
 /**ESTO DEBE CAMBIAR SEGUN LA EMPRESA*/
 
 insert into config.sucursales (sucpadre_id, distrito_id, subcategoria_id, adminstrador_id, numero, ruc, imagen, rsocial, nombre, direccion) values
 (null, 1594, '5f666eed1cf97', 1, 100,'2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'SHOPDAY SEDE CENTRAL', 'Jr. Andino 1235 frente a la Comisaria');
 select * from config.sucursales;
+
 /* DATOS DE PRUEBA
 insert into config.sucursales (distrito_id, subcategoria_id, adminstrador_id, numero, ruc, imagen, rsocial, nombre, direccion,estado) values
 (1594, '5f666f37477ef', 2, 101,'2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'EL ROPERO DEL ESQUELETO', 'Jr. Ajacucho 1234',true),

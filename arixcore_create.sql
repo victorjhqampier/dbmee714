@@ -9,7 +9,7 @@
 
 /*---------------PRIVATE----------------------------------------*/
 CREATE SCHEMA private;
-create table private.departamentos( /*P01*/
+create table private.departamentos(/*P01*/
 	departamento_id INT not null,
 	departamento VARCHAR(60) not null,
     primary key (departamento_id)
@@ -123,16 +123,17 @@ create table config.profesiones(
     primary key (profesion_id)
 );
 
-create table config.empcategorias( /*compcategorias_C08*/
+create table config.categorias( /*compcategorias_C08*/
 	categoria_id char(13) not null,
 	categoria VARCHAR(50) not null,
 	primary key (categoria_id)
 );
-create table config.empsubcategorias( /*compsubcategorias_C09*/
+
+create table config.subcategorias( /*compsubcategorias_C09*/
 	subcategoria_id char(13) not null,
 	categoria_id char(13) not null,
 	subcategoria VARCHAR(50) not null,
-	foreign key (categoria_id) references config.empcategorias (categoria_id),
+	foreign key (categoria_id) references config.categorias (categoria_id),
 	primary key (subcategoria_id)
 );
 
@@ -151,9 +152,12 @@ create table config.sucursales (
 	fregistro TIMESTAMP not null default current_timestamp,
     foreign key (sucpadre_id) references config.sucursales(sucursal_id),/*cambiar*/
     foreign key (distrito_id) references private.distritos (distrito_id),
-    foreign key (subcategoria_id) references config.empsubcategorias(subcategoria_id),
+    foreign key (subcategoria_id) references config.subcategorias(subcategoria_id),
     primary key (sucursal_id)
 ); CREATE INDEX index_sucursales_num ON config.sucursales (numero);
+
+--ALTER TABLE config.sucursales DROP CONSTRAINT sucursales_subcategoria_id_fkey;
+--ALTER TABLE config.sucursales ADD CONSTRAINT sucursales_subcategoria_id_fkey foreign key (subcategoria_id) references config.subcategorias(subcategoria_id) ON DELETE CASCADE ON UPDATE CASCADE;
 --alter table config.sucursales ADD COLUMN estado boolean not null default true
 --ALTER TABLE config.sucursales rename COLUMN numero to numero int not null
 
