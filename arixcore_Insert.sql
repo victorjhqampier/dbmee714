@@ -629,3 +629,10 @@ ALTER TABLE config.sucusales ADD COLUMN imgen varchar(80) not null default '609f
 ALTER TABLE config.sucusales RENAME COLUMN imgen  TO imagen
 update from config.sucusales where sucursal_id = 1
 UPDATE config.sucusales SET imagen = '609f436c933f6813f16092f6ff87a1da.jpg' where sucursal_id = 2;
+
+--Para ver la tabla adecuada
+SELECT column_name                  --Seleccionamos el nombre de columna
+FROM information_schema.columns
+WHERE table_schema = 'config'
+AND table_name   = 'sucursales'
+AND column_name  = 'sucpadre_id'
