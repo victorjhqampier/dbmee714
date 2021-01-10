@@ -335,7 +335,7 @@ insert into config.sucursales (distrito_id, subcategoria_id, adminstrador_id, nu
 (1594, '5f666f37477ef', 2, 101,'2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'EL ROPERO DEL ESQUELETO', 'Jr. Ajacucho 1234',true),
 (1594, '5f666f37477ef', 1, 102,'2014624708' ,'609f436c933f6813f16092f6ff87a1da.jpg', 'SHOPDAY E.R.L', 'EL TORO POR LAS BOLAS', 'Jr. Amamzonar 34 segundo piso',false),
 (1641, '5f666f4e64c4a', 2, 103,'2014624708' ,'609f436c933f6813f16092f6ff87a1de.jpg', 'SHOPDAY E.R.L', 'LA CASA DE DOÑA JULIA', 'Jr. Artiagua calle 2 piso 2 stand 4',true),
-(1641, '5f666f4e64c4a', 2, 103,'2014624708' ,'609f436c933f6813f16092f6ff87a1da.jpg', 'SHOPDAY E.R.L', 'MODA Y ESTILO SHOPDAY', 'Jr. Arica frente al ejercito del perú',false);*/
+(1641, '5f666f4e64c4a', 2, 104,'2014624708' ,'609f436c933f6813f16092f6ff87a1da.jpg', 'SHOPDAY E.R.L', 'MODA Y ESTILO SHOPDAY', 'Jr. Arica frente al ejercito del perú',false);*/
 --update config.sucursales SET numero = 101 where sucursal_id = 2
 
 -- anterior insert into config.areas(sucursal_id, areaminimal, area, funciones) values
@@ -563,9 +563,7 @@ fd5850eedbc5o'), ('E7B893AFE190E', 'E785128c26901a2f4cfd390a377354o'), ('E4E6995
 ('3D4570468C5F0', 'E7d9a4d0cabe539a6157d6f8d50d1866o'), ('FB1499E633541', 'E5760bc9eadaec853efdfab01c03o'), 
 ('3C312BBACFE9E', 'E7d9a5df01b6af0066985f35b7051674o'), ('5BCAC0D486260', 'Ed7d9a680a72c8be03991a83023511b63o'), ('F7272D22592F9', 'Ea75860641c48b5198c33183706b3o'), ('2167E01505A1C', 'Ed9a7fb04851d2b8d9aade28e33f25eo'), ('01A7A9A9A83E1', 'Ed9a89dd6c9a15cd517015352c84d1fo'), ('4E208C2AA26E8', 'E93fa4c7e37ecba5febaa93a5689o'), ('7F4ED6B6C7586', 'Ef856523d3a2529c5262ae0c5eo'), ('7CD6A9044DA32', 'E85579bf55dbb86dab58fa325a3o'), ('78C13121565B3', '259b163cb8c6aa9da419f1fe00o');
 
-insert into config.recursos(recurso, direction,tipo) values 
-('boostrap.dataTables','https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js',1),
-('jquery.dataTables','https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',1),
+insert into config.recursos(recurso, direction,tipo) values
 ('Chart','https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js',1),
 ('arixmeejs','base_url();public/resources/js/arixmeejs.js',1),
 ('inicio-arixjs','base_url();public/resources/js/arixjs-inicio.js',1),
@@ -573,28 +571,48 @@ insert into config.recursos(recurso, direction,tipo) values
 ('arixstore-arixjs','base_url();public/resources/js/arixjs-arixstore.js',1);
 select * from config.recursos;
 
-SELECT * FROM private.traductores 
-where true
-LIMIT 20 OFFSET 10
-
-/*delete from config.recursos where direction = 'datatables-demo';
-update config.recursos SET direction = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js' 
-where recurso_id = 3*/
+-- TABLA DE PERMISOS QUE IMPLEMENTA ARIXCORE
+-- LECT.	ESCR.	ACTUA.	BORR.	DEC.	Detalle
+-- 1		1		1		1		15	-	
+-- 1		1		1		0		14	-
+-- 1		1		0		1		13	-
+-- 1		1		0		0		12	-
+-- 1		0		1		1		11	-
+-- 1		0		1		0		10	-
+-- 1		0		0		1		9	-
+-- 1		0		0		0		8	Solo Lectura
+-- 0		1		1		1		7	-
+-- 0		1		1		0		6	- escritura y actualizacion
+-- 0		1		0		1		5	-
+-- 0		1		0		0		4	Solo Escritura
+-- 0		0		1		1		3	-
+-- 0		0		1		0		2	Solo Actualizar
+-- 0		0		0		1		1	Solo Borrar
+-- 0		0		0		0		0	Ningúno
+-- PARA ACCEDER A LA BASE DE DATOS
 
 insert into config.botones(permiso,boton, icono, titulo) values
-(1,'btn-borrar', 'fas fa-trash','Eliminar'),
-(2,'btn-terminar', 'fas fa-power-off','Terminar'),
-(2,'btn-actualizar', 'fas fa-retweet','Actualizar'),
+-- Solo borrar
+(1,'btn-borrar', 'fas fa-trash','Eliminar'), 
+-- Solo Actualizar
+(2,'btn-banear', 'fa fa-ban','Banear'),
+(2,'btn-editar','fas fa-pen','Editar'),
+--(6,'btn-guardar', 'fas fa-check','Guardar'),
+-- solo escritura
 (4,'btn-guardar', 'fas fa-check','Guardar'),
-(8,'btn-editar','fas fa-pen','Editar'),
+(4,'btn-agregar', 'fas fa-plus','Nuevo'),
+-- solo lectura
+(8,'btn-refrescar', 'fas fa-retweet','Refrescar'),
 (8,'btn-ayuda', 'fas fa-info-circle','Ayuda'),
-(8,'btn-atras', 'fas fa-backward','Atr��s'),
+(8,'btn-atras', 'fas fa-backward','Atrás'),
 (8,'btn-listar', 'fas fa-th-list','Ver lista'),
 (8,'btn-imprimir', 'fas fa-print','Imprimir'),
 (8,'btn-descargar', 'fas fa-download','Descargar'),
 (8,'btn-detalles', 'fas fa-window-restore','Ver detalles'),
 (8,'btn-cerrar', 'fas fa-times','Cancelar'),
-(8,'btn-agregar', 'fas fa-plus','Nuevo');
+(8,'btn-buscar', 'fa fa-search','Buscar'),
+(8,'btn-puntos', 'fa fa-ellipsis-h','Puntos');
+
 select * from config.botones;
 
 --estoy aqui  sucursal -> distrito -> provimcia -> departamento
@@ -619,11 +637,13 @@ select * from private.tautorizadas;
 
 
 select * from private.permisos
+select * from config.v_cuenta_permiso
+select * from config.cuentas c 
 
 /*---------ALGUNAS PRUEBAS------------------- */
 SELECT "documento", "codigo", "nombres", "paterno", "materno", "fotografia", "estado", "fregistro" FROM "config"."v_persona_empleado_cuenta" WHERE 'jefe_id' IS NOT NULL ORDER BY "fmodificacion" DESC LIMIT 0
 select * from private.traductores where sal = 'A93B84EDB93CD';
-select * from config_cuentas
+select * from private.personas p 
 select HEX(AES_ENCRYPT(5, '47d9647fb213dee9893b5889894d4a23')) code;
 ALTER TABLE config.sucusales ADD COLUMN imgen varchar(80) not null default '609f436c933f6813f16092f6ff87a1de.jpg';
 ALTER TABLE config.sucusales RENAME COLUMN imgen  TO imagen
